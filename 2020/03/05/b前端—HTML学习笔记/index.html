@@ -4,9 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="并行计算—OpenMP（一）, Tannl&#39;s Blog">
-    <meta name="description" content=" 疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 
- 进入正题之前总是想要碎碎念一下。毕竟我的">
+    <meta name="keywords" content="Web前端—HTML学习笔记, Tannl&#39;s Blog">
+    <meta name="description" content="HTML简介
+Web上的通用标记语言
+书写Web文档的一套语法规范
+用HTML语言写成的文件称为网页或页面
+是一种解释型语言
+由Web浏览器解释执行
+
+HTML5文档结构12345678910&amp;lt;!DOCTYPE html&amp;gt;   ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>并行计算—OpenMP（一） | Tannl&#39;s Blog</title>
+    <title>Web前端—HTML学习笔记 | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -286,13 +292,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        并行计算—OpenMP（一）
+                        Web前端—HTML学习笔记
                     </div>
                 </div>
             </div>
@@ -401,13 +407,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/OpenMP/" target="_blank">
-                                <span class="chip bg-color">OpenMP</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -418,7 +420,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-04
+                    2020-03-05
                 </div>
 
                 
@@ -434,37 +436,32 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p> 疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 </p>
-<p> 进入正题之前总是想要碎碎念一下。毕竟我的博客也不是当作技术教程来写的，更多的是想当成自己的一个小天地，记录一下一直以来我的学习历程。过几年再回头来看，说不定就是一个普通计算机专业大学生进化为<del>前沿技术科研工作者/技术大牛/高级工程师</del>的学习史嘿嘿~</p>
-<p> Anyway，这篇博客想要记录的是 对于我来说 一个<strong>全新的模块</strong> 并行计算相关</p>
-<p> 最让我头疼的就是<strong>并行粒度</strong>问题了，当一个程序串行执行时只需9s，你使用多线程并行后变成了30s↑。   初学者怀疑人生系列。</p>
-<hr>
-<h3 id="OpenMP基础"><a href="#OpenMP基础" class="headerlink" title="OpenMP基础"></a>OpenMP基础</h3><p>  &emsp;  &emsp;  OpenMP是基于共享存储体系的一个并行编程标准。通过在串行程序中添加OpenMP指令和调用OpenMP库函数来实现在共享内存系统上的并行执行。可以在超级计算机上执行，具有良好的可移植性。</p>
-<ul>
-<li>不打开OpenMP编译选项，编译器将忽略OpenMP指令。</li>
-<li>并行线程数可以在程序启动时利用环境变量设置。</li>
-<li>支持与MPI混合编程</li>
+                <h3 id="HTML简介"><a href="#HTML简介" class="headerlink" title="HTML简介"></a>HTML简介</h3><ul>
+<li><strong>Web上的通用标记语言</strong></li>
+<li><strong>书写Web文档的一套语法规范</strong></li>
+<li><strong>用HTML语言写成的文件称为网页或页面</strong></li>
+<li><strong>是一种解释型语言</strong></li>
+<li><strong>由Web浏览器解释执行</strong></li>
 </ul>
-<h4 id="OpenMP并行程序的编写方法"><a href="#OpenMP并行程序的编写方法" class="headerlink" title="OpenMP并行程序的编写方法"></a>OpenMP并行程序的编写方法</h4><p><strong>增量并行</strong>： 逐步改造现有的串行程序，每次只对部分代码进行并行化，这样可以逐步改造，逐步调试。</p>
-<h4 id="OpenMP编程要素"><a href="#OpenMP编程要素" class="headerlink" title="OpenMP编程要素"></a>OpenMP编程要素</h4><p>制导指令和子句按照各自的功能可以大致分为四类：</p>
-<h5 id="并行域指令-Parallel-Constructs"><a href="#并行域指令-Parallel-Constructs" class="headerlink" title="并行域指令 Parallel Constructs"></a>并行域指令 Parallel Constructs</h5><p><strong>parallel</strong></p>
-<p><strong>end parallel</strong>：<br>标志一个并行域的开始和结束。</p>
-<h5 id="工作共享指令"><a href="#工作共享指令" class="headerlink" title="工作共享指令"></a>工作共享指令</h5><p><strong>Do</strong> ，<strong>end Do</strong> (Fortran)： 用在Do循环之前，标识一个并行循环任务的开始和结束，必须保证每次循环之间无<em>数据相关性</em>。</p>
-<hr>
-<p><strong>sections</strong></p>
-<p><strong>section</strong> ：标识仅由一个线程执行的若干区域。</p>
-<p><strong>end section</strong></p>
-<hr>
-<p><strong>Single</strong>： 标识经由一个线程执行的区域</p>
-<h5 id="同步指令"><a href="#同步指令" class="headerlink" title="同步指令"></a>同步指令</h5><p><strong>master</strong>：标识仅由主线程执行的区域的开始</p>
-<p><strong>critical</strong>： 标识关键区的开始（保证每次只有一个线程进入）</p>
-<p><strong>barrier</strong>： 障碍同步</p>
-<p><strong>atomic</strong>： 确保共享变量在同一时间只能被一个线程更新</p>
-<p><strong>flush</strong>： 用在同步的时候，确保数据被正确写入</p>
-<p><strong>ordered</strong>: 指定并行区域的循环按顺序执行</p>
-<h5 id="子句-cluse"><a href="#子句-cluse" class="headerlink" title="子句[cluse]"></a>子句[cluse]</h5><p><strong>private</strong>、<strong>firstprivate</strong>、<strong>lastprivate</strong>、<strong>reduction</strong>、<strong>nowait</strong>、<br><strong>num_threads</strong>、<strong>schedule</strong>、<strong>shared</strong>、<strong>copyprivate</strong>、<strong>copyin</strong>、<strong>default</strong>。</p>
-<h5 id="API函数"><a href="#API函数" class="headerlink" title="API函数"></a>API函数</h5><p><img src="//tannl.github.io/2020/03/04/行计算——OpenMP（一）/%5Cimages%5Cpasted-3.png%5C" alt="upload successful"></p>
-<p><img src="//tannl.github.io/2020/03/04/行计算——OpenMP（一）/%5Cimages%5Cpasted-5.png%5C" alt="upload successful"></p>
+<h4 id="HTML5文档结构"><a href="#HTML5文档结构" class="headerlink" title="HTML5文档结构"></a>HTML5文档结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;   &lt;!--文档类型声明，HTML5强制使用，必须在首行--&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;  </span><br><span class="line">&lt;head&gt;              &lt;!--头元素--&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;!--其他头内元素--&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt; &lt;!--页面标题--&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;   &lt;!--体元素--&gt;</span><br><span class="line">            &lt;!--页面主要内容区域--&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="标签解析"><a href="#标签解析" class="headerlink" title="标签解析"></a>标签解析</h4><p>根元素: <strong>&lt; html &gt; &lt; /html &gt;</strong>  定义了文档的开始和结束</p>
+<p>体元素：<strong>&lt; body &gt;</strong> <strong>&lt; /body &gt;</strong> 定义了文档的主体，包含了文档的所有内容</p>
+<p>头元素： <strong>&lt; head &gt; &lt; /head &gt;</strong> 定义了文档的头部，描述了文档的各种属性和信息，内容可以是脚本、样式表和提供的元素信息等。</p>
+<p><strong>&lt; title &gt;&lt; /title &gt;</strong>必须存在且包含在头元素中。</p>
+<h3 id="HTML常用属性标签"><a href="#HTML常用属性标签" class="headerlink" title="HTML常用属性标签"></a>HTML常用属性标签</h3><h4 id="常用全局属性"><a href="#常用全局属性" class="headerlink" title="常用全局属性"></a>常用全局属性</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-8.png%5C" alt="upload successful"></p>
+<h3 id="IIS简介"><a href="#IIS简介" class="headerlink" title="IIS简介"></a>IIS简介</h3><ul>
+<li>互联网信息服务</li>
+<li>由微软公司提供的基于运行Microsoft Windows的互联网基本服务</li>
+<li>是一种Web（网页）服务组件，包括<ul>
+<li>Web服务器–网页浏览</li>
+<li>FTP服务器–文件传输</li>
+<li>NNTP服务器–新闻服务</li>
+<li>SMTP服务器–邮件发送</li>
+</ul>
+</li>
+<li>配置网站成功后即可在本地进行管理</li>
+</ul>
 
             </div>
             <hr/>
@@ -623,9 +620,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《并行计算—OpenMP（一）》
+                    《Web前端—HTML学习笔记》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/04/行计算——OpenMP（一）/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/05/b前端—HTML学习笔记/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -665,9 +662,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/03/05/b前端—HTML学习笔记/">
                     <div class="card-image">
@@ -692,9 +690,9 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -703,6 +701,7 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -713,24 +712,25 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/30/算法分析——线性时间排序/">
+                <a href="/2020/03/04/行计算——OpenMP（一）/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="算法分析——线性时间排序">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="并行计算—OpenMP（一）">
                         
-                        <span class="card-title">算法分析——线性时间排序</span>
+                        <span class="card-title">并行计算—OpenMP（一）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            算法导论之线性时间排序 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单… 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己
+                             疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 
+ 进入正题之前总是想要碎碎念一下。毕竟我的
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-30
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-04
                             </span>
                         <span class="publish-author">
                             
@@ -743,8 +743,8 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/算法-计算机科学-数学/" target="_blank">
-                        <span class="chip bg-color">算法 计算机科学 数学</span>
+                    <a href="/tags/OpenMP/" target="_blank">
+                        <span class="chip bg-color">OpenMP</span>
                     </a>
                     
                 </div>
