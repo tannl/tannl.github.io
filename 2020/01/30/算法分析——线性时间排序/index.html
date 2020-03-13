@@ -402,8 +402,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/算法-计算机科学-数学/" target="_blank">
-                                <span class="chip bg-color">算法 计算机科学 数学</span>
+                            <a href="/tags/算法/" target="_blank">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -437,7 +437,7 @@
 <h4 id="非线性时间的排序算法"><a href="#非线性时间的排序算法" class="headerlink" title="非线性时间的排序算法"></a>非线性时间的排序算法</h4><p> 要证明基于比较的几种非线性时间的排序算法最低时间复杂度为<strong>O(nlgn)</strong>,需要补充一个决策树的概念。（不知道为什么一个这么有用的模型我们数据结构课程都没有讲)</p>
 <h5 id="决策树概念"><a href="#决策树概念" class="headerlink" title="决策树概念"></a>决策树概念</h5><p> 统计学，数据挖掘和机器学习中的决策树训练，使用决策树作为预测模型来预测样本的类标。 这种决策树也称作分类树或回归树。 在这些树的结构里， 叶子节点给出类标而内部节点代表某个属性。 在决策分析中，一棵决策树可以明确地表达决策的过程。</p>
 <p> 通过基于比较的事件来构建一个决策树模型，最终得到一个二叉树。（比较考虑两种结果大于或小于，所以最多只有两个子节点，而叶子结点则最终代表比较后的排序结果）<br> 例如：</p>
-<p><img src="https://img-blog.csdn.net/20181011113928129?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tkYl92aWV3ZXI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<p><img src="/2020/01/30/算法分析——线性时间排序/1.jpg" alt></p>
 <p>了解到决策树概念后，假设你的数据为n，则共有<strong>n！</strong>种排序结果，即决策树共有<strong>n！</strong>个叶子结点。<br>假设树的高度为h<br>则有</p>
 <p>n! &lt;= 2^h </p>
 <p>h &gt;= lg n!    </p>
@@ -446,7 +446,7 @@
 </blockquote>
 <p>得出  算法下界为O（nlgn）</p>
 <h5 id="常见排序算法"><a href="#常见排序算法" class="headerlink" title="常见排序算法"></a>常见排序算法</h5><p>前七种为常见的非线性时间排序算法，后三种为线性时间排序算法<br>不同的排序算法在不同的情况下会有差距较大的效果，不存在绝对的效率最高的算法。</p>
-<p><img src="https://www.runoob.com/wp-content/uploads/2019/03/sort.png" alt></p>
+<p><img src="/2020/01/30/算法分析——线性时间排序/2.png" alt></p>
 <h4 id="线性时间的排序算法"><a href="#线性时间的排序算法" class="headerlink" title="线性时间的排序算法"></a>线性时间的排序算法</h4><p>接下来是关于两种线性时间的排序算法的相关证明。看起来线性时间的效果会高于非线性的算法，但当数据涉及范围非常大时，对于线性时间算法k占主导地位会导致效率大大降低。</p>
 <h5 id="计数排序算法"><a href="#计数排序算法" class="headerlink" title="计数排序算法"></a>计数排序算法</h5><p>算法的步骤如下：<br>①找出待排序的数组中最大和最小的元素<br>②统计数组中每个值为i的元素出现的次数，存入数组C的第i项<br>③对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）<br>④反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1 </p>
 <p>其时间复杂度为<strong>O(k+n)</strong>。<br>数的范围为0~k， n为数的规模。它的时间复杂度是线性的，但复杂度不只是被数的规模所掌控，算法是否高效也取决于它的数的范围。</p>
@@ -658,7 +658,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/03/04/并行计算——OpenMP（一）/">
+                <a href="/2020/03/04/并行计算——OpenMP-一/">
                     <div class="card-image">
                         
                         
