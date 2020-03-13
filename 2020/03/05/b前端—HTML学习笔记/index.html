@@ -407,9 +407,13 @@ HTML5文档结构12345678910&amp;lt;!DOCTYPE html&amp;gt;   ">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/HTML/" target="_blank">
+                                <span class="chip bg-color">HTML</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -449,7 +453,6 @@ HTML5文档结构12345678910&amp;lt;!DOCTYPE html&amp;gt;   ">
 <p>体元素：<strong>&lt; body &gt;</strong> <strong>&lt; /body &gt;</strong> 定义了文档的主体，包含了文档的所有内容</p>
 <p>头元素： <strong>&lt; head &gt; &lt; /head &gt;</strong> 定义了文档的头部，描述了文档的各种属性和信息，内容可以是脚本、样式表和提供的元素信息等。</p>
 <p><strong>&lt; title &gt;&lt; /title &gt;</strong>必须存在且包含在头元素中。</p>
-<h3 id="HTML常用属性标签"><a href="#HTML常用属性标签" class="headerlink" title="HTML常用属性标签"></a>HTML常用属性标签</h3><h4 id="常用全局属性"><a href="#常用全局属性" class="headerlink" title="常用全局属性"></a>常用全局属性</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-8.png%5C" alt="upload successful"></p>
 <h3 id="IIS简介"><a href="#IIS简介" class="headerlink" title="IIS简介"></a>IIS简介</h3><ul>
 <li>互联网信息服务</li>
 <li>由微软公司提供的基于运行Microsoft Windows的互联网基本服务</li>
@@ -462,6 +465,75 @@ HTML5文档结构12345678910&amp;lt;!DOCTYPE html&amp;gt;   ">
 </li>
 <li>配置网站成功后即可在本地进行管理</li>
 </ul>
+<h3 id="HTML常用属性标签"><a href="#HTML常用属性标签" class="headerlink" title="HTML常用属性标签"></a>HTML常用属性标签</h3><h4 id="常用全局属性"><a href="#常用全局属性" class="headerlink" title="常用全局属性"></a>常用全局属性</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-8.png%5C" alt="upload successful"></p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-21.png%5C" alt="upload successful"></p>
+<h4 id="meta标签属性"><a href="#meta标签属性" class="headerlink" title="meta标签属性"></a>meta标签属性</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-22.png%5C" alt="upload successful"></p>
+<h3 id="HTML标签解析"><a href="#HTML标签解析" class="headerlink" title="HTML标签解析"></a>HTML标签解析</h3><h4 id="列表标签"><a href="#列表标签" class="headerlink" title="列表标签"></a>列表标签</h4><p> //普通列表<br><strong>&lt; ol &gt;</strong>: 有序列表<br><strong>&lt; ul &gt;</strong>: 无序列表<br><strong>&lt; li &gt;</strong>: 列表项<br>// 解释型列表<br><strong>&lt; dl &gt;</strong>: 定义列表<br><strong>&lt; dt &gt;</strong>: 定义列表项<br><strong>&lt; dd &gt;</strong>: 定义列表项描述<br>代码示例：<br><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-12.png%5C" alt="upload successful"><br>展示效果：</p>
+<ul>    我的早餐清单：    <li>        茶的种类        <ul>            <li>红茶</li>            <li>绿茶</li>        </ul>    </li>    <li>牛奶</li>    <li>面包</li></ul>我最喜欢做的事情：<ol>    <li>看书</li>    <li>旅游</li>    <li>游戏</li></ol>最不喜欢的事情：<ol start="5" reversed="reversed">    <li>做作业</li>    <li>背英语单词</li>    <li>考试</li></ol>
+
+<h4 id="链接标签"><a href="#链接标签" class="headerlink" title="链接标签"></a>链接标签</h4><p><strong>&lt; a &gt;</strong>: (anchor)<br><br>链接目标可以是：另一个网页，同一个网页的不同位置，图片，邮件地址，文件，应用程序。</p>
+<p><strong>&lt; a &gt;</strong>标签的属性：</p>
+<ul>
+<li>href: 值为目标url</li>
+<li>target：值有：<ul>
+<li>_blank:在新窗口打开</li>
+<li>_self: 在本窗口打开</li>
+<li>_top：在顶部窗口打开</li>
+<li>帧名：在指定框架（帧）中打开</li>
+</ul>
+</li>
+<li>id： 在网页内部创建一个书签，Id值区分大小写</li>
+</ul>
+<p>id的使用：网页中的某个位置使用&lt; a id=”PageTop”&gt;&lt; /a &gt;<br>        另一个位置&lt; a href=”#PageTop”&gt;返回顶部<br>      此时点击这个链接将会返回id标签的位置。</p>
+<h4 id="页面结构标签"><a href="#页面结构标签" class="headerlink" title="页面结构标签"></a>页面结构标签</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-15.png%5C" alt="upload successful"></p>
+<p>页面结构主要分为三个部分。header页面头部部分，中 页面主要内容区域，footer页面底部区域。&lt; div &gt;标签用来区分块。</p>
+<h4 id="常用字符实体"><a href="#常用字符实体" class="headerlink" title="常用字符实体"></a>常用字符实体</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-16.png%5C" alt="upload successful"></p>
+<h4 id="基础格式标签"><a href="#基础格式标签" class="headerlink" title="基础格式标签"></a>基础格式标签</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-17.png%5C" alt="upload successful"></p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-18.png%5C" alt="upload successful"></p>
+<h4 id="表格标签"><a href="#表格标签" class="headerlink" title="表格标签"></a>表格标签</h4><p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-19.png%5C" alt="upload successful"><br>演示效果：</p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-20.png%5C" alt="upload successful"></p>
+<p><strong>&lt; table &gt;</strong>:<br><br>table标签中的值有：</p>
+<ul>
+<li>border：设置表格的边框线宽度</li>
+</ul>
+<ul>
+<li>cellpadding：单元格内容与边框的距离</li>
+<li>cellspacing：单元格之间的距离<br>table内部标签：</li>
+</ul>
+<ul>
+<li>&lt; tr &gt;: 行</li>
+<li>&lt; td &gt;: 列（表数据）<ul>
+<li>colspan：合并列（td中的值）</li>
+<li>rowspan：行并列</li>
+</ul>
+</li>
+<li>&lt; th &gt;: 表头（默认为加粗的表头）</li>
+</ul>
+<ul>
+<li>&lt; caption &gt;: 定义表格标题，必须紧跟table标签之后。</li>
+</ul>
+<h4 id="表单标签"><a href="#表单标签" class="headerlink" title="表单标签"></a>表单标签</h4><p>form标签：前后台信息交互的图形界面，允许用户输入的区域，页面上的表单的里面的信息会被提交到后台处理。<br>form属性值：</p>
+<ul>
+<li>method：提交表单的方式<ul>
+<li>get （明文传递）</li>
+<li>post（密文传递，更安全）</li>
+</ul>
+</li>
+<li>action：后台处理程序的路径，前台提交的表单交给该标签的url处理。</li>
+</ul>
+<p>form内部标签：</p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-9.png%5C" alt="upload successful"></p>
+<h5 id="input表单输入标签"><a href="#input表单输入标签" class="headerlink" title="input表单输入标签"></a>input表单输入标签</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户名 &lt;input type=&quot;text&quot; id=&quot;1&quot; name=&quot;1&quot; minlength=&quot;6&quot; maxlength=&quot;10&quot; </span><br><span class="line">/ placeholder=&quot;请输入用户名&quot;&gt;&lt;/br&gt;</span><br></pre></td></tr></table></figure>
+
+<p>input中type值：</p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-10.png%5C" alt="upload successful"></p>
+<p><img src="//tannl.github.io/2020/03/05/b前端—HTML学习笔记/%5Cimages%5Cpasted-13.png%5C" alt="upload successful"></p>
+<h3 id="tab快速生成代码"><a href="#tab快速生成代码" class="headerlink" title="tab快速生成代码"></a>tab快速生成代码</h3><p>① !/html：5 +&lt; tab &gt;:快速生成html基础结构<br>②标记名.class值+tab键： 生成&lt;标记名 class=”class值”&gt;<br>③标记名#ID值+tab： 生成&lt;标记名 id=”id值”&gt;<br>④标签名{内容}+tab<br>⑤标签名[属性名=“属性值”]:输入标签内容及属性<br>⑥<strong>&gt;:子元素符号表示嵌套</strong><br>示例：Table&gt;tr*2&gt;td*3<br>tab键生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;Table&gt;</span><br><span class="line">   &lt;tr&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line">     &lt;tr&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line"> &lt;/Table&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 示例（有数字递增）：ul&gt;li.item$*3<br> tab生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li class=&quot;item1&quot;&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;item2&quot;&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;item3&quot;&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>+：同级标签符号</strong><br> 示例：H1+h2<br> tab键生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;</span><br></pre></td></tr></table></figure></p>
+<p> <strong>^:该符号前的标签提升一行</strong><br> 示例：P&gt;span^p<br> tab生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;P&gt;&lt;span&gt;&lt;/span&gt;&lt;/P&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
 
             </div>
             <hr/>
@@ -702,6 +774,14 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/HTML/" target="_blank">
+                        <span class="chip bg-color">HTML</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
