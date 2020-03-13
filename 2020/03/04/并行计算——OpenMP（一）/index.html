@@ -4,8 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="算法分析——线性时间排序, Tannl&#39;s Blog">
-    <meta name="description" content="算法导论之线性时间排序 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单… 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己">
+    <meta name="keywords" content="并行计算—OpenMP（一）, Tannl&#39;s Blog">
+    <meta name="description" content="疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 
+ 进入正题之前总是想要碎碎念一下。毕竟我的博">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>算法分析——线性时间排序 | Tannl&#39;s Blog</title>
+    <title>并行计算—OpenMP（一） | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -285,13 +286,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        算法分析——线性时间排序
+                        并行计算—OpenMP（一）
                     </div>
                 </div>
             </div>
@@ -402,8 +403,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/算法-计算机科学-数学/" target="_blank">
-                                <span class="chip bg-color">算法 计算机科学 数学</span>
+                            <a href="/tags/OpenMP/" target="_blank">
+                                <span class="chip bg-color">OpenMP</span>
                             </a>
                         
                     </div>
@@ -417,7 +418,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-30
+                    2020-03-04
                 </div>
 
                 
@@ -433,27 +434,45 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="算法导论之线性时间排序"><a href="#算法导论之线性时间排序" class="headerlink" title="算法导论之线性时间排序"></a>算法导论之线性时间排序</h3><p> 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单…<br> 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己学了个假数据结构，或者说曾经学了个假数学。研究了好久排序算法的时间复杂度，补充了一些证明相关的知识。写个博客记录一下~</p>
-<h4 id="非线性时间的排序算法"><a href="#非线性时间的排序算法" class="headerlink" title="非线性时间的排序算法"></a>非线性时间的排序算法</h4><p> 要证明基于比较的几种非线性时间的排序算法最低时间复杂度为<strong>O(nlgn)</strong>,需要补充一个决策树的概念。（不知道为什么一个这么有用的模型我们数据结构课程都没有讲)</p>
-<h5 id="决策树概念"><a href="#决策树概念" class="headerlink" title="决策树概念"></a>决策树概念</h5><p> 统计学，数据挖掘和机器学习中的决策树训练，使用决策树作为预测模型来预测样本的类标。 这种决策树也称作分类树或回归树。 在这些树的结构里， 叶子节点给出类标而内部节点代表某个属性。 在决策分析中，一棵决策树可以明确地表达决策的过程。</p>
-<p> 通过基于比较的事件来构建一个决策树模型，最终得到一个二叉树。（比较考虑两种结果大于或小于，所以最多只有两个子节点，而叶子结点则最终代表比较后的排序结果）<br> 例如：</p>
-<p><img src="https://img-blog.csdn.net/20181011113928129?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tkYl92aWV3ZXI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
-<p>了解到决策树概念后，假设你的数据为n，则共有<strong>n！</strong>种排序结果，即决策树共有<strong>n！</strong>个叶子结点。<br>假设树的高度为h<br>则有</p>
-<p>n! &lt;= 2^h </p>
-<p>h &gt;= lg n!    </p>
-<blockquote>
-<p>斯特林公式引用</p>
-</blockquote>
-<p>得出  算法下界为O（nlgn）</p>
-<h5 id="常见排序算法"><a href="#常见排序算法" class="headerlink" title="常见排序算法"></a>常见排序算法</h5><p>前七种为常见的非线性时间排序算法，后三种为线性时间排序算法<br>不同的排序算法在不同的情况下会有差距较大的效果，不存在绝对的效率最高的算法。</p>
-<p><img src="https://www.runoob.com/wp-content/uploads/2019/03/sort.png" alt></p>
-<h4 id="线性时间的排序算法"><a href="#线性时间的排序算法" class="headerlink" title="线性时间的排序算法"></a>线性时间的排序算法</h4><p>接下来是关于两种线性时间的排序算法的相关证明。看起来线性时间的效果会高于非线性的算法，但当数据涉及范围非常大时，对于线性时间算法k占主导地位会导致效率大大降低。</p>
-<h5 id="计数排序算法"><a href="#计数排序算法" class="headerlink" title="计数排序算法"></a>计数排序算法</h5><p>算法的步骤如下：<br>①找出待排序的数组中最大和最小的元素<br>②统计数组中每个值为i的元素出现的次数，存入数组C的第i项<br>③对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）<br>④反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1 </p>
-<p>其时间复杂度为<strong>O(k+n)</strong>。<br>数的范围为0~k， n为数的规模。它的时间复杂度是线性的，但复杂度不只是被数的规模所掌控，算法是否高效也取决于它的数的范围。</p>
-<h5 id="基数排序算法"><a href="#基数排序算法" class="headerlink" title="基数排序算法"></a>基数排序算法</h5><p>基数排序的时间复杂度是<strong>O(kn)</strong>，其中<strong>n</strong>是排序元素个数，<strong>k</strong>是数字位数。这不是说这个时间复杂度一定优于<strong>O(nlgn)</strong>，<strong>k</strong>的大小取决于数字位的选择（比如比特位数），和待排序数据所属数据类型的全集的大小；<strong>k</strong>决定了进行多少轮处理，而<strong>n</strong>是每轮处理的操作数目。</p>
-<p>以排序n个不同整数来举例，假定这些整数以B为底，这样每位数都有B个不同的数字，<br><strong>k=logB N</strong>，N是待排序数据类型全集的势。虽然有B个不同的数字，需要B个不同的桶，但在每一轮处理中，判断每个待排序数据项只需要一次计算确定对应数字的值，因此在每一轮处理的时候都需要平均n次操作来把整数放到合适的桶中去</p>
-<p>其中前一项是一个与输入数据无关的常数，当然该项不一定小于log n。</p>
-<p>如果考虑和比较排序进行对照，基数排序的形式复杂度虽然不一定更小，但由于不进行比较，因此其基本操作的代价较小，而且在适当选择的B之下，k一般不大于log n，所以基数排序一般要快过基于比较的排序，比如快速排序。</p>
+                <p>疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 </p>
+<p> 进入正题之前总是想要碎碎念一下。毕竟我的博客也不是当作技术教程来写的，更多的是想当成自己的一个小天地，记录一下一直以来我的学习历程。过几年再回头来看，说不定就是一个普通计算机专业大学生进化为<del>前沿技术科研工作者/技术大牛/高级工程师</del>的学习史嘿嘿~</p>
+<p> Anyway，这篇博客想要记录的是 对于我来说 一个<strong>全新的模块</strong> 并行计算相关</p>
+<p> 最让我头疼的就是<strong>并行粒度</strong>问题了，当一个程序串行执行时只需9s，你使用多线程并行后变成了30s↑。   初学者怀疑人生系列。</p>
+<hr>
+<h2 id="OpenMP基础"><a href="#OpenMP基础" class="headerlink" title="OpenMP基础"></a>OpenMP基础</h2><p>  &emsp;  &emsp;  OpenMP是基于共享存储体系的一个并行编程标准。通过在串行程序中添加OpenMP指令和调用OpenMP库函数来实现在共享内存系统上的并行执行。可以在超级计算机上执行，具有良好的可移植性。</p>
+<ul>
+<li>不打开OpenMP编译选项，编译器将忽略OpenMP指令。</li>
+<li>并行线程数可以在程序启动时利用环境变量设置。</li>
+<li>支持与MPI混合编程</li>
+</ul>
+<h3 id="OpenMP并行程序的编写方法"><a href="#OpenMP并行程序的编写方法" class="headerlink" title="OpenMP并行程序的编写方法"></a>OpenMP并行程序的编写方法</h3><p><strong>增量并行</strong>： 逐步改造现有的串行程序，每次只对部分代码进行并行化，这样可以逐步改造，逐步调试。</p>
+<p>OpenMP编程要素<br>制导指令和子句按照各自的功能可以大致分为四类：</p>
+<h3 id="并行域指令-Parallel-Constructs"><a href="#并行域指令-Parallel-Constructs" class="headerlink" title="并行域指令 Parallel Constructs"></a>并行域指令 Parallel Constructs</h3><p><strong>parallel</strong></p>
+<p><strong>end parallel</strong>：<br>标志一个并行域的开始和结束。</p>
+<h4 id="工作共享指令"><a href="#工作共享指令" class="headerlink" title="工作共享指令"></a>工作共享指令</h4><p><strong>Do</strong> ，<strong>end Do</strong> (Fortran)： 用在Do循环之前，标识一个并行循环任务的开始和结束，必须保证每次循环之间无<em>数据相关性</em>。</p>
+<hr>
+<p><strong>sections</strong></p>
+<p><strong>section</strong> ：标识仅由一个线程执行的若干区域。</p>
+<p><strong>end section</strong></p>
+<hr>
+<p><strong>Single</strong>： 标识经由一个线程执行的区域</p>
+<h4 id="同步指令"><a href="#同步指令" class="headerlink" title="同步指令"></a>同步指令</h4><p><strong>master</strong>：标识仅由主线程执行的区域的开始</p>
+<p><strong>critical</strong>： 标识关键区的开始（保证每次只有一个线程进入）</p>
+<p><strong>barrier</strong>： 障碍同步</p>
+<p><strong>atomic</strong>： 确保共享变量在同一时间只能被一个线程更新</p>
+<p><strong>flush</strong>： 用在同步的时候，确保数据被正确写入</p>
+<p><strong>ordered</strong>: 指定并行区域的循环按顺序执行</p>
+<h4 id="子句-cluse"><a href="#子句-cluse" class="headerlink" title="子句[cluse]"></a>子句[cluse]</h4><p><strong>private</strong>、<strong>firstprivate</strong>、<strong>lastprivate</strong>、<strong>reduction</strong>、<strong>nowait</strong>、<br><strong>num_threads</strong>、<strong>schedule</strong>、<strong>shared</strong>、<strong>copyprivate</strong>、<strong>copyin</strong>、<strong>default</strong>。</p>
+<h4 id="API函数"><a href="#API函数" class="headerlink" title="API函数"></a>API函数</h4><p><img src="/2020/03/04/并行计算——OpenMP（一）/%5Cimages%5Cpasted-3.png%5C" alt="upload successful"></p>
+<p><img src="/2020/03/04/并行计算——OpenMP（一）/%5Cimages%5Cpasted-5.png%5C" alt="upload successful"></p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>锁的消耗是介于 atomic 和 critial 之间的，锁操作特别灵活，当另外两种方式不能满足需求时可以考虑通过锁来实现。<br>锁的类型为<strong>omp_lock_t</strong>，相关函 数有：<em>omp_init_lock（初始化锁）、omp_set_lock（获得锁）、omp_unset_lock （释放锁）以及 omp_destroyed_lock（销毁锁）</em>。</p>
+<p><strong>初始化锁和销毁 锁要在并行区域之外进行。</strong></p>
+<h4 id="schedule（static-dynamic-guided-runtime-size-）"><a href="#schedule（static-dynamic-guided-runtime-size-）" class="headerlink" title="schedule（static/dynamic/guided/runtime,[size]）"></a>schedule（static/dynamic/guided/runtime,[size]）</h4><p> static：静态调度策略，将任务/数据在循环执行之前被分配给线程。采 用交替分配的方式按照 size 大小来给每个线程分配迭代。</p>
+<p> <strong>使用动态调度规则时，需要考虑任务分配所花费的时间更多</strong></p>
+<p> dynamic：动态调度策略，任务/数据在循环执行时被分配给线程。当线 程计算完成时，它能够从运行时系统中请求更多。</p>
+<p>  guided：指导调度策略，也是任务/数据在循环执行时被分配给线程。它采用启发式自调度策略。开始时每个线程会被分配较大的迭代次数，之后逐渐减小。</p>
+<p> runtime：运行时调度策略，在运行时根据环境变量的值来决定具体的<br>调度策略，使用上述三种中的一种。 </p>
+<p>三种调度策略的系统开销大小依次是 <strong>static &lt; dynamic &lt; guided</strong>。如 果代码在默认<br>情况下（不使用 schedule）能达到较好性能，则不使用 schedule 子句。如果随 着循环的进行，迭代的计算量线性递增（或递减），采用 size 较小的 static 策<br>略能得到较好的负载均衡，提供最好的性能。如果需要在多种策略之间对比测试<br>时，可以考虑使用 runtime 方式通过环境变量来控制最终使用哪一种策略，避 免反复变动代码。 </p>
 
             </div>
             <hr/>
@@ -612,9 +631,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《算法分析——线性时间排序》
+                    《并行计算—OpenMP（一）》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/30/算法分析——线性时间排序/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/04/并行计算——OpenMP（一）/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -658,25 +677,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/03/04/并行计算——OpenMP（一）/">
+                <a href="/2020/03/05/Web前端—HTML学习笔记/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="并行计算—OpenMP（一）">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Web前端—HTML学习笔记">
                         
-                        <span class="card-title">并行计算—OpenMP（一）</span>
+                        <span class="card-title">Web前端—HTML学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 
- 进入正题之前总是想要碎碎念一下。毕竟我的博
+                            HTML简介
+Web上的通用标记语言
+书写Web文档的一套语法规范
+用HTML语言写成的文件称为网页或页面
+是一种解释型语言
+由Web浏览器解释执行
+
+HTML5文档结构12345678910&lt;!DOCTYPE html&gt;   
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-04
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
                         </span>
                         <span class="publish-author">
                             
@@ -689,8 +714,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenMP/" target="_blank">
-                        <span class="chip bg-color">OpenMP</span>
+                    <a href="/tags/HTML/" target="_blank">
+                        <span class="chip bg-color">HTML</span>
                     </a>
                     
                 </div>
@@ -704,25 +729,24 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/13/article-title/">
+                <a href="/2020/01/30/算法分析——线性时间排序/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="My first article">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="算法分析——线性时间排序">
                         
-                        <span class="card-title">My first article</span>
+                        <span class="card-title">算法分析——线性时间排序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            我的博客搭建之路正式成为blogger的第一天 ~
-我是跟着这个教程做的 https://godweiyang.com/2018/04/13/hexo-blog/ ，写的很详细适合我这种新手上路，中途也解决了几个教程中没有提到的小bug，主
+                            算法导论之线性时间排序 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单… 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-13
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-30
                             </span>
                         <span class="publish-author">
                             
@@ -731,6 +755,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/算法-计算机科学-数学/" target="_blank">
+                        <span class="chip bg-color">算法 计算机科学 数学</span>
+                    </a>
+                    
                 </div>
                 
             </div>

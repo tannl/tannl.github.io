@@ -4,8 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="算法分析——线性时间排序, Tannl&#39;s Blog">
-    <meta name="description" content="算法导论之线性时间排序 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单… 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己">
+    <meta name="keywords" content="Web前端—HTML学习笔记, Tannl&#39;s Blog">
+    <meta name="description" content="HTML简介
+Web上的通用标记语言
+书写Web文档的一套语法规范
+用HTML语言写成的文件称为网页或页面
+是一种解释型语言
+由Web浏览器解释执行
+
+HTML5文档结构12345678910&amp;lt;!DOCTYPE html&amp;gt;   ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>算法分析——线性时间排序 | Tannl&#39;s Blog</title>
+    <title>Web前端—HTML学习笔记 | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -285,13 +292,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        算法分析——线性时间排序
+                        Web前端—HTML学习笔记
                     </div>
                 </div>
             </div>
@@ -402,8 +409,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/算法-计算机科学-数学/" target="_blank">
-                                <span class="chip bg-color">算法 计算机科学 数学</span>
+                            <a href="/tags/HTML/" target="_blank">
+                                <span class="chip bg-color">HTML</span>
                             </a>
                         
                     </div>
@@ -417,7 +424,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-30
+                    2020-03-05
                 </div>
 
                 
@@ -433,27 +440,100 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="算法导论之线性时间排序"><a href="#算法导论之线性时间排序" class="headerlink" title="算法导论之线性时间排序"></a>算法导论之线性时间排序</h3><p> 寒假期间，由于新型冠状病毒疫情导致没法出门也没去练车，在家闲得开始学习，上学期结束了数据结构的课程，但是觉得还不够深入，而且学校的考试好简单…<br> 遂决定自己在家看看《算法导论》补充点知识，毕竟是经典。看到前几章觉得自己学了个假数据结构，或者说曾经学了个假数学。研究了好久排序算法的时间复杂度，补充了一些证明相关的知识。写个博客记录一下~</p>
-<h4 id="非线性时间的排序算法"><a href="#非线性时间的排序算法" class="headerlink" title="非线性时间的排序算法"></a>非线性时间的排序算法</h4><p> 要证明基于比较的几种非线性时间的排序算法最低时间复杂度为<strong>O(nlgn)</strong>,需要补充一个决策树的概念。（不知道为什么一个这么有用的模型我们数据结构课程都没有讲)</p>
-<h5 id="决策树概念"><a href="#决策树概念" class="headerlink" title="决策树概念"></a>决策树概念</h5><p> 统计学，数据挖掘和机器学习中的决策树训练，使用决策树作为预测模型来预测样本的类标。 这种决策树也称作分类树或回归树。 在这些树的结构里， 叶子节点给出类标而内部节点代表某个属性。 在决策分析中，一棵决策树可以明确地表达决策的过程。</p>
-<p> 通过基于比较的事件来构建一个决策树模型，最终得到一个二叉树。（比较考虑两种结果大于或小于，所以最多只有两个子节点，而叶子结点则最终代表比较后的排序结果）<br> 例如：</p>
-<p><img src="https://img-blog.csdn.net/20181011113928129?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tkYl92aWV3ZXI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
-<p>了解到决策树概念后，假设你的数据为n，则共有<strong>n！</strong>种排序结果，即决策树共有<strong>n！</strong>个叶子结点。<br>假设树的高度为h<br>则有</p>
-<p>n! &lt;= 2^h </p>
-<p>h &gt;= lg n!    </p>
-<blockquote>
-<p>斯特林公式引用</p>
-</blockquote>
-<p>得出  算法下界为O（nlgn）</p>
-<h5 id="常见排序算法"><a href="#常见排序算法" class="headerlink" title="常见排序算法"></a>常见排序算法</h5><p>前七种为常见的非线性时间排序算法，后三种为线性时间排序算法<br>不同的排序算法在不同的情况下会有差距较大的效果，不存在绝对的效率最高的算法。</p>
-<p><img src="https://www.runoob.com/wp-content/uploads/2019/03/sort.png" alt></p>
-<h4 id="线性时间的排序算法"><a href="#线性时间的排序算法" class="headerlink" title="线性时间的排序算法"></a>线性时间的排序算法</h4><p>接下来是关于两种线性时间的排序算法的相关证明。看起来线性时间的效果会高于非线性的算法，但当数据涉及范围非常大时，对于线性时间算法k占主导地位会导致效率大大降低。</p>
-<h5 id="计数排序算法"><a href="#计数排序算法" class="headerlink" title="计数排序算法"></a>计数排序算法</h5><p>算法的步骤如下：<br>①找出待排序的数组中最大和最小的元素<br>②统计数组中每个值为i的元素出现的次数，存入数组C的第i项<br>③对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）<br>④反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1 </p>
-<p>其时间复杂度为<strong>O(k+n)</strong>。<br>数的范围为0~k， n为数的规模。它的时间复杂度是线性的，但复杂度不只是被数的规模所掌控，算法是否高效也取决于它的数的范围。</p>
-<h5 id="基数排序算法"><a href="#基数排序算法" class="headerlink" title="基数排序算法"></a>基数排序算法</h5><p>基数排序的时间复杂度是<strong>O(kn)</strong>，其中<strong>n</strong>是排序元素个数，<strong>k</strong>是数字位数。这不是说这个时间复杂度一定优于<strong>O(nlgn)</strong>，<strong>k</strong>的大小取决于数字位的选择（比如比特位数），和待排序数据所属数据类型的全集的大小；<strong>k</strong>决定了进行多少轮处理，而<strong>n</strong>是每轮处理的操作数目。</p>
-<p>以排序n个不同整数来举例，假定这些整数以B为底，这样每位数都有B个不同的数字，<br><strong>k=logB N</strong>，N是待排序数据类型全集的势。虽然有B个不同的数字，需要B个不同的桶，但在每一轮处理中，判断每个待排序数据项只需要一次计算确定对应数字的值，因此在每一轮处理的时候都需要平均n次操作来把整数放到合适的桶中去</p>
-<p>其中前一项是一个与输入数据无关的常数，当然该项不一定小于log n。</p>
-<p>如果考虑和比较排序进行对照，基数排序的形式复杂度虽然不一定更小，但由于不进行比较，因此其基本操作的代价较小，而且在适当选择的B之下，k一般不大于log n，所以基数排序一般要快过基于比较的排序，比如快速排序。</p>
+                <h3 id="HTML简介"><a href="#HTML简介" class="headerlink" title="HTML简介"></a>HTML简介</h3><ul>
+<li><strong>Web上的通用标记语言</strong></li>
+<li><strong>书写Web文档的一套语法规范</strong></li>
+<li><strong>用HTML语言写成的文件称为网页或页面</strong></li>
+<li><strong>是一种解释型语言</strong></li>
+<li><strong>由Web浏览器解释执行</strong></li>
+</ul>
+<h4 id="HTML5文档结构"><a href="#HTML5文档结构" class="headerlink" title="HTML5文档结构"></a>HTML5文档结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;   &lt;!--文档类型声明，HTML5强制使用，必须在首行--&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;  </span><br><span class="line">&lt;head&gt;              &lt;!--头元素--&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;!--其他头内元素--&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt; &lt;!--页面标题--&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;   &lt;!--体元素--&gt;</span><br><span class="line">            &lt;!--页面主要内容区域--&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="标签解析"><a href="#标签解析" class="headerlink" title="标签解析"></a>标签解析</h4><p>根元素: <strong>&lt; html &gt; &lt; /html &gt;</strong>  定义了文档的开始和结束</p>
+<p>体元素：<strong>&lt; body &gt;</strong> <strong>&lt; /body &gt;</strong> 定义了文档的主体，包含了文档的所有内容</p>
+<p>头元素： <strong>&lt; head &gt; &lt; /head &gt;</strong> 定义了文档的头部，描述了文档的各种属性和信息，内容可以是脚本、样式表和提供的元素信息等。</p>
+<p><strong>&lt; title &gt;&lt; /title &gt;</strong>必须存在且包含在头元素中。</p>
+<h3 id="IIS简介"><a href="#IIS简介" class="headerlink" title="IIS简介"></a>IIS简介</h3><ul>
+<li>互联网信息服务</li>
+<li>由微软公司提供的基于运行Microsoft Windows的互联网基本服务</li>
+<li>是一种Web（网页）服务组件，包括<ul>
+<li>Web服务器–网页浏览</li>
+<li>FTP服务器–文件传输</li>
+<li>NNTP服务器–新闻服务</li>
+<li>SMTP服务器–邮件发送</li>
+</ul>
+</li>
+<li>配置网站成功后即可在本地进行管理</li>
+</ul>
+<h3 id="HTML常用属性标签"><a href="#HTML常用属性标签" class="headerlink" title="HTML常用属性标签"></a>HTML常用属性标签</h3><h4 id="常用全局属性"><a href="#常用全局属性" class="headerlink" title="常用全局属性"></a>常用全局属性</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/D:%5Ctannl%5Cmyblog%5Csource%5Cimages" alt="upload successful"></p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-21.png%5C" alt="upload successful"></p>
+<h4 id="meta标签属性"><a href="#meta标签属性" class="headerlink" title="meta标签属性"></a>meta标签属性</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-22.png%5C" alt="upload successful"></p>
+<h3 id="HTML标签解析"><a href="#HTML标签解析" class="headerlink" title="HTML标签解析"></a>HTML标签解析</h3><h4 id="列表标签"><a href="#列表标签" class="headerlink" title="列表标签"></a>列表标签</h4><p> //普通列表<br><strong>&lt; ol &gt;</strong>: 有序列表<br><strong>&lt; ul &gt;</strong>: 无序列表<br><strong>&lt; li &gt;</strong>: 列表项<br>// 解释型列表<br><strong>&lt; dl &gt;</strong>: 定义列表<br><strong>&lt; dt &gt;</strong>: 定义列表项<br><strong>&lt; dd &gt;</strong>: 定义列表项描述<br>代码示例：<br><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-12.png%5C" alt="upload successful"><br>展示效果：</p>
+<ul>    我的早餐清单：    <li>        茶的种类        <ul>            <li>红茶</li>            <li>绿茶</li>        </ul>    </li>    <li>牛奶</li>    <li>面包</li></ul>我最喜欢做的事情：<ol>    <li>看书</li>    <li>旅游</li>    <li>游戏</li></ol>最不喜欢的事情：<ol start="5" reversed="reversed">    <li>做作业</li>    <li>背英语单词</li>    <li>考试</li></ol>
+
+<h4 id="链接标签"><a href="#链接标签" class="headerlink" title="链接标签"></a>链接标签</h4><p><strong>&lt; a &gt;</strong>: (anchor)<br><br>链接目标可以是：另一个网页，同一个网页的不同位置，图片，邮件地址，文件，应用程序。</p>
+<p><strong>&lt; a &gt;</strong>标签的属性：</p>
+<ul>
+<li>href: 值为目标url</li>
+<li>target：值有：<ul>
+<li>_blank:在新窗口打开</li>
+<li>_self: 在本窗口打开</li>
+<li>_top：在顶部窗口打开</li>
+<li>帧名：在指定框架（帧）中打开</li>
+</ul>
+</li>
+<li>id： 在网页内部创建一个书签，Id值区分大小写</li>
+</ul>
+<p>id的使用：网页中的某个位置使用&lt; a id=”PageTop”&gt;&lt; /a &gt;<br>        另一个位置&lt; a href=”#PageTop”&gt;返回顶部<br>      此时点击这个链接将会返回id标签的位置。</p>
+<h4 id="页面结构标签"><a href="#页面结构标签" class="headerlink" title="页面结构标签"></a>页面结构标签</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-15.png%5C" alt="upload successful"></p>
+<p>页面结构主要分为三个部分。header页面头部部分，中 页面主要内容区域，footer页面底部区域。&lt; div &gt;标签用来区分块。</p>
+<h4 id="常用字符实体"><a href="#常用字符实体" class="headerlink" title="常用字符实体"></a>常用字符实体</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-16.png%5C" alt="upload successful"></p>
+<h4 id="基础格式标签"><a href="#基础格式标签" class="headerlink" title="基础格式标签"></a>基础格式标签</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-17.png%5C" alt="upload successful"></p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-18.png%5C" alt="upload successful"></p>
+<h4 id="表格标签"><a href="#表格标签" class="headerlink" title="表格标签"></a>表格标签</h4><p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-19.png%5C" alt="upload successful"><br>演示效果：</p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-20.png%5C" alt="upload successful"></p>
+<p><strong>&lt; table &gt;</strong>:<br><br>table标签中的值有：</p>
+<ul>
+<li>border：设置表格的边框线宽度</li>
+</ul>
+<ul>
+<li>cellpadding：单元格内容与边框的距离</li>
+<li>cellspacing：单元格之间的距离<br>table内部标签：</li>
+</ul>
+<ul>
+<li>&lt; tr &gt;: 行</li>
+<li>&lt; td &gt;: 列（表数据）<ul>
+<li>colspan：合并列（td中的值）</li>
+<li>rowspan：行并列</li>
+</ul>
+</li>
+<li>&lt; th &gt;: 表头（默认为加粗的表头）</li>
+</ul>
+<ul>
+<li>&lt; caption &gt;: 定义表格标题，必须紧跟table标签之后。</li>
+</ul>
+<h4 id="表单标签"><a href="#表单标签" class="headerlink" title="表单标签"></a>表单标签</h4><p>form标签：前后台信息交互的图形界面，允许用户输入的区域，页面上的表单的里面的信息会被提交到后台处理。<br>form属性值：</p>
+<ul>
+<li>method：提交表单的方式<ul>
+<li>get （明文传递）</li>
+<li>post（密文传递，更安全）</li>
+</ul>
+</li>
+<li>action：后台处理程序的路径，前台提交的表单交给该标签的url处理。</li>
+</ul>
+<p>form内部标签：</p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-9.png%5C" alt="upload successful"></p>
+<h5 id="input表单输入标签"><a href="#input表单输入标签" class="headerlink" title="input表单输入标签"></a>input表单输入标签</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户名 &lt;input type=&quot;text&quot; id=&quot;1&quot; name=&quot;1&quot; minlength=&quot;6&quot; maxlength=&quot;10&quot; </span><br><span class="line">/ placeholder=&quot;请输入用户名&quot;&gt;&lt;/br&gt;</span><br></pre></td></tr></table></figure>
+
+<p>input中type值：</p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-10.png%5C" alt="upload successful"></p>
+<p><img src="/2020/03/05/Web前端—HTML学习笔记/%5Cimages%5Cpasted-13.png%5C" alt="upload successful"></p>
+<h3 id="tab快速生成代码"><a href="#tab快速生成代码" class="headerlink" title="tab快速生成代码"></a>tab快速生成代码</h3><p>① !/html：5 +&lt; tab &gt;:快速生成html基础结构<br>②标记名.class值+tab键： 生成&lt;标记名 class=”class值”&gt;<br>③标记名#ID值+tab： 生成&lt;标记名 id=”id值”&gt;<br>④标签名{内容}+tab<br>⑤标签名[属性名=“属性值”]:输入标签内容及属性<br>⑥<strong>&gt;:子元素符号表示嵌套</strong><br>示例：Table&gt;tr*2&gt;td*3<br>tab键生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;Table&gt;</span><br><span class="line">   &lt;tr&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line">     &lt;tr&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">     &lt;td&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line"> &lt;/Table&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 示例（有数字递增）：ul&gt;li.item$*3<br> tab生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li class=&quot;item1&quot;&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;item2&quot;&gt;&lt;/li&gt;</span><br><span class="line">  &lt;li class=&quot;item3&quot;&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>+：同级标签符号</strong><br> 示例：H1+h2<br> tab键生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;</span><br></pre></td></tr></table></figure></p>
+<p> <strong>^:该符号前的标签提升一行</strong><br> 示例：P&gt;span^p<br> tab生成：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;P&gt;&lt;span&gt;&lt;/span&gt;&lt;/P&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
 
             </div>
             <hr/>
@@ -612,9 +692,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《算法分析——线性时间排序》
+                    《Web前端—HTML学习笔记》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/30/算法分析——线性时间排序/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/05/Web前端—HTML学习笔记/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -654,9 +734,63 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/03/05/Web前端—HTML学习笔记/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Web前端—HTML学习笔记">
+                        
+                        <span class="card-title">Web前端—HTML学习笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            HTML简介
+Web上的通用标记语言
+书写Web文档的一套语法规范
+用HTML语言写成的文件称为网页或页面
+是一种解释型语言
+由Web浏览器解释执行
+
+HTML5文档结构12345678910&lt;!DOCTYPE html&gt;   
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            tannl
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/HTML/" target="_blank">
+                        <span class="chip bg-color">HTML</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/03/04/并行计算——OpenMP（一）/">
                     <div class="card-image">
@@ -675,9 +809,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -693,44 +827,6 @@
                         <span class="chip bg-color">OpenMP</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/10/13/article-title/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="My first article">
-                        
-                        <span class="card-title">My first article</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            我的博客搭建之路正式成为blogger的第一天 ~
-我是跟着这个教程做的 https://godweiyang.com/2018/04/13/hexo-blog/ ，写的很详细适合我这种新手上路，中途也解决了几个教程中没有提到的小bug，主
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-13
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-user fa-fw"></i>
-                            tannl
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
