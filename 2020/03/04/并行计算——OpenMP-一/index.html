@@ -407,6 +407,10 @@
                                 <span class="chip bg-color">OpenMP</span>
                             </a>
                         
+                            <a href="/tags/并行计算/" target="_blank">
+                                <span class="chip bg-color">并行计算</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -455,24 +459,34 @@
 <p><strong>section</strong> ：标识仅由一个线程执行的若干区域。</p>
 <p><strong>end section</strong></p>
 <hr>
-<p><strong>Single</strong>： 标识经由一个线程执行的区域</p>
-<h4 id="同步指令"><a href="#同步指令" class="headerlink" title="同步指令"></a>同步指令</h4><p><strong>master</strong>：标识仅由主线程执行的区域的开始</p>
+<p><strong>Single</strong>： 标识经由一个线程执行的区域。<br>其中一种需要使用single制导指令的情况是为了<strong>减少并行域的创建和开销</strong>，而将多个临近的parallel并行域合并时。经过合并后，原来并行域之间的串行代码也将被并行执行，违反了代码原来的目的，因此这部分代码可以用single指令加以约束只用一个线程来完成。</p>
+<h4 id="同步指令"><a href="#同步指令" class="headerlink" title="同步指令"></a>同步指令</h4><p>Openmp支持两种不同类型的线程同步机制，一种是互斥锁的机制，可以用来保护一块共享的存储空间，使任何时候访问这块共享内存空间的线程最多只有一个，从而保证了数据的完整性；另一种机制是事件同步机制，这种机制保证了多个线程制之间的执行顺序。</p>
+<p><strong>master</strong>：标识仅由主线程执行的区域的开始</p>
 <p><strong>critical</strong>： 标识关键区的开始（保证每次只有一个线程进入）</p>
 <p><strong>barrier</strong>： 障碍同步</p>
-<p><strong>atomic</strong>： 确保共享变量在同一时间只能被一个线程更新</p>
+<p><strong>atomic</strong>： 确保共享变量在同一时间只能被一个线程更新。值得注意的是，当对一个数据进行原子操作保护的时候，就不能对数据进行临界区（critical）的保护，openmp运行时并不能在这两种保护机制之间建立配合机制。用户在针对同一个内存单元使用原子操作的时候，需要在程序所有涉及到该变量并行赋值的部位都加入原子操作的保护。</p>
 <p><strong>flush</strong>： 用在同步的时候，确保数据被正确写入</p>
-<p><strong>ordered</strong>: 指定并行区域的循环按顺序执行</p>
+<p><strong>ordered</strong>: 指定并行区域的循环按顺序执行。有些任务在并行执行，对于部分必须串行执行的部分才启用ordered保护。</p>
 <h4 id="子句-cluse"><a href="#子句-cluse" class="headerlink" title="子句[cluse]"></a>子句[cluse]</h4><p><strong>private</strong>、<strong>firstprivate</strong>、<strong>lastprivate</strong>、<strong>reduction</strong>、<strong>nowait</strong>、<br><strong>num_threads</strong>、<strong>schedule</strong>、<strong>shared</strong>、<strong>copyprivate</strong>、<strong>copyin</strong>、<strong>default</strong>。</p>
+<p><strong>注意</strong>：<br>①如果存在写操作，必须对共享变量加以保护，否则不要轻易使用共享变量，尽量将共享变量的访问转化为私有变量的访问。循环迭代变量在循环构造的任务分担域里是私有的，声明在任务分担域内的自动变量都是私有的。<br>②出现在reduction子句中的变量不能出现在private子句中。<br>③如果在并行域内不加锁保护就直接对共享变量进行写操作，存在数据竞争问题，会导致不可预测的异常结果。如果共享数据作为private、firstprivate、lastprivate、threadprivate、reduction子句的参数进入并行域后，就变成线程私有了，不需要加锁保护了。<br>④对于lastprivate子句，如果是for循环迭代，那么是将最后一次的循环迭代中的值赋给对应的共享变量；如果是sections构造，那么是<strong>代码</strong>中排在最后的section语句中的值赋给对应的共享变量。<br>⑤ threadprivate与copyin关联进行初始化，copyprivate与single关联进行广播</p>
 <h4 id="API函数"><a href="#API函数" class="headerlink" title="API函数"></a>API函数</h4><p><img src="/2020/03/04/并行计算——OpenMP-一/pasted-3.png" alt></p>
 <p><img src="/2020/03/04/并行计算——OpenMP-一/pasted-5.png" alt></p>
 <h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>锁的消耗是介于 atomic 和 critial 之间的，锁操作特别灵活，当另外两种方式不能满足需求时可以考虑通过锁来实现。<br>锁的类型为<strong>omp_lock_t</strong>，相关函 数有：<em>omp_init_lock（初始化锁）、omp_set_lock（获得锁）、omp_unset_lock （释放锁）以及 omp_destroyed_lock（销毁锁）</em>。</p>
 <p><strong>初始化锁和销毁 锁要在并行区域之外进行。</strong></p>
-<h4 id="schedule（static-dynamic-guided-runtime-size-）"><a href="#schedule（static-dynamic-guided-runtime-size-）" class="headerlink" title="schedule（static/dynamic/guided/runtime,[size]）"></a>schedule（static/dynamic/guided/runtime,[size]）</h4><p> static：静态调度策略，将任务/数据在循环执行之前被分配给线程。采 用交替分配的方式按照 size 大小来给每个线程分配迭代。</p>
+<h4 id="schedule"><a href="#schedule" class="headerlink" title="schedule"></a>schedule</h4><p>（static/dynamic/guided/runtime,[size]）</p>
+<p> static：静态调度策略，将任务/数据在循环执行之前被分配给线程。采 用交替分配的方式按照 size 大小来给每个线程分配迭代。</p>
 <p> <strong>使用动态调度规则时，需要考虑任务分配所花费的时间更多</strong></p>
 <p> dynamic：动态调度策略，任务/数据在循环执行时被分配给线程。当线 程计算完成时，它能够从运行时系统中请求更多。</p>
 <p>  guided：指导调度策略，也是任务/数据在循环执行时被分配给线程。它采用启发式自调度策略。开始时每个线程会被分配较大的迭代次数，之后逐渐减小。</p>
 <p> runtime：运行时调度策略，在运行时根据环境变量的值来决定具体的<br>调度策略，使用上述三种中的一种。 </p>
-<p>三种调度策略的系统开销大小依次是 <strong>static &lt; dynamic &lt; guided</strong>。如 果代码在默认<br>情况下（不使用 schedule）能达到较好性能，则不使用 schedule 子句。如果随 着循环的进行，迭代的计算量线性递增（或递减），采用 size 较小的 static 策<br>略能得到较好的负载均衡，提供最好的性能。如果需要在多种策略之间对比测试<br>时，可以考虑使用 runtime 方式通过环境变量来控制最终使用哪一种策略，避 免反复变动代码。 </p>
+<p>三种调度策略的系统开销大小依次是 <strong>static &lt; dynamic &lt; guided</strong>。如果代码在默认情况下（不使用 schedule）能达到较好性能，则不使用 schedule 子句。如果随着循环的进行，迭代的计算量线性递增（或递减），采用 size 较小的 static 策略能得到较好的负载均衡，提供最好的性能。动态调度时，size较小有利于实现更好的负载平衡，但是会引起过多的任务动态申请开销，反之size大则开销较少，但不易于实现负载平衡，size的选择需要在这两者之间进行权衡。如果需要在多种策略之间对比测试时，可以考虑使用 runtime 方式通过环境变量来控制最终使用哪一种策略，避免反复变动代码。</p>
+<h4 id="指令for任务分担"><a href="#指令for任务分担" class="headerlink" title="指令for任务分担"></a>指令for任务分担</h4><p>循环变量分解原则：</p>
+<ul>
+<li>分解代价低</li>
+<li>任务的计算量要均衡</li>
+<li>尽量避免cache行冲突</li>
+</ul>
+<p>首先需要时间上快速分解方案产生方法，任务划分开销最低的是静态分割方法。所以因尽量使用静态调度。<br>其次要求分解方案产生的各个计算任务负载均衡。<br>第三个原则是循环变量划分方案尽量能让各个线程执行for循环体的代码时，充分考虑其中的代码访问和数据访问顺序与cache的关系。</p>
 
             </div>
             <hr/>
