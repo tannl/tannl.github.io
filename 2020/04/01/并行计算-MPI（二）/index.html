@@ -4,11 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="并行计算——MPI(一), Tannl&#39;s Blog">
-    <meta name="description" content="并行计算相关go on~排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。
-好了言归正传，这是一篇学习MPI的相关笔记。
-MPI基础
-MPI">
+    <meta name="keywords" content="并行计算--MPI（二）, Tannl&#39;s Blog">
+    <meta name="description" content="并行计算--MPI（二） | Tannl&#39;s Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +13,7 @@ MPI">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>并行计算——MPI(一) | Tannl&#39;s Blog</title>
+    <title>并行计算--MPI（二） | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -288,13 +285,13 @@ MPI">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        并行计算——MPI(一)
+                        并行计算--MPI（二）
                     </div>
                 </div>
             </div>
@@ -403,17 +400,9 @@ MPI">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/MPI/" target="_blank">
-                                <span class="chip bg-color">MPI</span>
-                            </a>
-                        
-                            <a href="/tags/并行计算/" target="_blank">
-                                <span class="chip bg-color">并行计算</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -424,7 +413,7 @@ MPI">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-19
+                    2020-04-01
                 </div>
 
                 
@@ -440,44 +429,7 @@ MPI">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>并行计算相关go on~<br>排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。</p>
-<p>好了言归正传，这是一篇学习MPI的相关笔记。</p>
-<h3 id="MPI基础"><a href="#MPI基础" class="headerlink" title="MPI基础"></a>MPI基础</h3><ul>
-<li>MPI是一个库，而不是一门语言。</li>
-<li>MPI是一种标准或规范的代表，而不特指某一个对它的具体实现。</li>
-<li>MPI是一种消息传递的编程模型，并成为这种编程模型的代表和事实上的标准</li>
-</ul>
-<h4 id="MPI的六个基本接口"><a href="#MPI的六个基本接口" class="headerlink" title="MPI的六个基本接口"></a>MPI的六个基本接口</h4><h5 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h5><p><strong>MPI_INIT()</strong>:<br>一个MPI程序的第一个调用必须是初始化接口的调用。它完成MPI程序的所以初始化工作.<br>c语言中的定义：</p>
-<pre><code>int MPI_Init(int *argc, char ***argv)</code></pre><h5 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h5><p><strong>MPI_FINALIZE()</strong>：一个MPI程序的最后一个调用，它结束MPI程序的运行，必须是最后一条可执行语句，否则程序的运行结果是不可预知的。<br>c语言中的定义：</p>
-<pre><code>int MPI_Finalize(void)</code></pre><h5 id="当前标识进程"><a href="#当前标识进程" class="headerlink" title="当前标识进程"></a>当前标识进程</h5><p><strong>MPI_COMM_RANK(comm,rank)</strong>:<br>comm: 输入, 该进程所在的通信域<br>rank: 输出， 调用进程在comm中的标识号<br>这一调用返回调用进程在给定通信域中的进程标识号，获得这个标识号，不同的进程就可以将自身和其他的进程区别开来，实现各进程的并行和协作。<br>c语言中的定义：</p>
-<pre><code>int MPI_Comm_rank(MPI_Comm comm, int *rank)</code></pre><h5 id="通信域包含的进程数"><a href="#通信域包含的进程数" class="headerlink" title="通信域包含的进程数"></a>通信域包含的进程数</h5><p><strong>MPI_COMM_SIZE(comm,size)</strong>:<br>comm: 输入，通信域<br>size：输出，通信域comm中包括的进程数（整数）<br>这一调用返回给定的通信域中所包括的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在执行并行。<br>c语言中的定义： </p>
-<pre><code>int MPI_Comm_size(MPI_Comm comm,int *size)</code></pre><h5 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h5><p><strong>MPI_SEND(buf,count,datatype,dest,comm)</strong>:<br>buf:          输入，发送缓冲区的起始地址<br>count：        输入，将发送的数据的个数（非负整数）<br>datatype：     输入，发送数据的数据类型<br>dest：        输入，目的进程的标识号<br>tag：        输入，该发送消息的消息标识（整型）<br>comm：        输入，通信域</p>
-<p>该接口将发送缓冲区中的count个datatype数据类型的数据发送到目的进程，目的进程在通信域中的标识号是dest，本次发送的消息标志是tag。使用标志可以把本次发送和本进程向同一目的进程发送的其他消息区别开来。<br>c语言中的定义：</p>
-<pre><code>int MPI_Send(void* buf,int count, MPI_Datatype datatype, int dest,int tag,MPI_Comm comm)</code></pre><h5 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h5><p><strong>MPI_RECV(buf, count, datatype, source,tag,comm,status)</strong>:<br>buf: 输出， 接收数据的缓冲区的起始地址<br>count： 输入，最多可接收的数据的个数<br>datatype： 输入，接收数据的数据类型<br>source： 输入，接收数据的来源，即发送数据的进程的进程标识号<br>tag： 输入，消息标识，与相应的发送操作的tag相匹配的标识<br>comm： 输入，本进程和发送进程所在的通信域<br>status： 输出，返回状态。返回状态变量，status是MPI定义的一个数据类型。在c实现中，状态变量是由至少三个域组成的结构类型，通过调用status.MPI_SOURCE,status.MPI_TAG,status.MPI_ERROR，就可以得到返回状态中所包含的发送数据进程的标识，发送数据的tag标识，本接收操作返回的错误代码。</p>
-<p>c语言中的定义：</p>
-<pre><code>int MPI_Recv(void* buf, int count, MPI_Datatype datatype, int source, int tag,MPI_Comm comm, MPI_Status *status)</code></pre><p>MPI_RECV从指定的进程source接收消息，并且该消息的数据类型和消息标识和本接收进程指定的 datatype和tag相一致。<br>接收到的消息所包含的数据元素的个数最多不能超过count。接收到消息的长度必须小于或等于接收缓冲区的长度，这是因为如果接收到的数据过大 MPI没有截断，接收缓冲区会发生溢出错误。count可以是零，这种情况下消息的数据部是空的。<br>其中datatype数据类型可以是MPI的预定义类型，也可以是用户自定义的类型，通过指定不同的数据类型调用MPI_RECV，可以接收不同类型的数据。</p>
-<h4 id="MPI预定义数据类型"><a href="#MPI预定义数据类型" class="headerlink" title="MPI预定义数据类型"></a>MPI预定义数据类型</h4><p><img src="/2020/03/19/并行计算——MPI-一/IMG_0478(20200319-201337).PNG" alt="数据类型"></p>
-<h4 id="MPI消息"><a href="#MPI消息" class="headerlink" title="MPI消息"></a>MPI消息</h4><p>MPI消息的组成：<br>           数据：&lt;起始地址，数据个数， 数据类型&gt;<br>           信封：&lt;源/目的地，标识， 通信域&gt;</p>
-<p>任意源： <strong>MPI_ANY_SOURCE</strong>,接收者可以用这个值表示任何进程发送的消息都可以接收，但其他要求还必须满足tag的匹配。<br>任意标识：<strong>MPI_ANY_TAG</strong>,该值表示接收者可以接收任意tag的标识值。<br>MPI允许一个进程可以给自己发送一个消息，但是这种操作要注意死锁的产生。</p>
-<h4 id="MPI通信域"><a href="#MPI通信域" class="headerlink" title="MPI通信域"></a>MPI通信域</h4><p>MPI通信域包括两部分： 进程组和通信上下文。进程的编号为0-N-1；通信上下文提供一个相对独立的通信域。<br>一个预定义的通信域MPI_COMM_WORLD由MPI提供。MPI初始化后就会产生这一描述，包括可以获得的全部进程。<br>MPI允许在原有的通信域的基础上，定义新的通信域。通信域为库和通信模式提供一种重要的封装机制。允许各模式由自己的独立通信域和自己的进程计数方案。</p>
-<h3 id="MPI通信模式"><a href="#MPI通信模式" class="headerlink" title="MPI通信模式"></a>MPI通信模式</h3><br>
-MPI共有四种通信模式，这几种通信模式对应于不同的通信需求。可以根据几种情况来区分：1 是否需要对发送的数据进行缓存？2 是否只有当接收调用执行后才可以执行发送操作？3 什么时候发送调用可以正确返回？等
-
-<p><img src="/2020/03/19/并行计算——MPI-一/2.PNG" alt="通信模式"></p>
-<h4 id="标准通信模式"><a href="#标准通信模式" class="headerlink" title="标准通信模式"></a>标准通信模式</h4><br>
-在MPI采用标准通信模式时，是否对发送的数据进行缓存由MPI自身决定。
-如果MPI缓存将要发送的数据，发送操作可以正确返回而对接收操作没有任何要求。
-由于缓存数据会延长通信时间，且缓冲区并不一定可以得到，这时MPI可以决定不缓存数据，这样只有当相应的接收调用被执行后，并且发送数据完全到达接收区后，发送才算完成。
-
-<h4 id="缓存通信模式"><a href="#缓存通信模式" class="headerlink" title="缓存通信模式"></a>缓存通信模式</h4><p>缓存通信发送数据函数：</p>
-<pre><code>int MPI_Bsend(void* buf,int count, MPI_Datatype datatype, int dest,int tag,MPI_Comm comm)</code></pre><p>该函数与MPI_Send的不同之处仅表现在通信时是使用标准的系统提供的缓冲区还是用户自己提供的缓冲区。缓存通信模式不管接收操作是否启动，发送操作都可以执行。<strong>用户必须保证发送消息之前有缓冲区可用。</strong><br>采用缓存通信模式，消息发送能否进行及能否正确返回完全依赖于是否有足够的通信域可以用。缓冲区只有当其中的消息发送出去后才可以重用或者释放。<br><br><strong>MPI_BUFFER_ATTACH(buffer，size)</strong>：<br>buffer： 输入，初始缓存地址<br>size:   输入，按字节计数的缓存跨度</p>
-<pre><code>int MPI_Buffer_attach(void *buffer, int size)</code></pre><p>该函数将大小为size的缓冲区递交给MPI。<br><br><strong>MPI_BUFFER_DETACH(buffer,size)</strong>:<br>buffer: 输出，缓冲区的初始地址<br>size： 输出，以字节为单位的缓冲区大小</p>
-<pre><code>int MPI_Buffer_detach(void **buffer, int size)</code></pre><p>该函数将提交大小为size的缓冲区buffer收回。阻塞调用，函数将等到使用该缓存的消息发送完毕后才返回。这一调用返回后用户可以重新使用该缓冲区或者将这一缓冲区释放。</p>
-<h4 id="同步通信模式"><a href="#同步通信模式" class="headerlink" title="同步通信模式"></a>同步通信模式</h4><p><strong>MPI_SSEND(buf,count,datatype,dest,tag,comm)</strong></p>
-<p>同步通信模式的开始不依赖于接收进程相应的接收操作是否启动，但是同步发送却必须等到相应的接收进程开始后才可以正确返回。    </p>
-<p>用于测试消息中数据个数的函数:</p>
-<pre><code>int MPI_Get_count(MPI_Status *status,MPI_datatype datatype, int *count)</code></pre><h4 id="就绪通信模式"><a href="#就绪通信模式" class="headerlink" title="就绪通信模式"></a>就绪通信模式</h4><p><strong>MPI_RSEND(buf,count,datatype,dest,tag,comm)</strong><br>在就绪通信模式中，只有当接收操作已经启动时，才可以在发送进程启动发送操作，否则发送操作将出错。对于非阻塞发送操作的正确返回，并不意味着发送已经完成，但对于阻塞发送的正确返回，则发送缓冲区可以重复使用。</p>
-
+                
             </div>
             <hr/>
 
@@ -635,9 +587,9 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《并行计算——MPI(一)》
+                    《并行计算--MPI（二）》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/19/并行计算——MPI-一/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/01/并行计算-MPI（二）/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -677,9 +629,10 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/04/01/并行计算-MPI（二）/">
                     <div class="card-image">
@@ -697,9 +650,9 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -708,6 +661,7 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -718,40 +672,32 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/05/Web前端——HTML学习笔记/">
+                <a href="/2020/03/19/并行计算——MPI-一/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Web前端—HTML学习笔记">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="并行计算——MPI(一)">
                         
-                        <span class="card-title">Web前端—HTML学习笔记</span>
+                        <span class="card-title">并行计算——MPI(一)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HTML简介
-Web上的通用标记语言
-书写Web文档的一套语法规范
-用HTML语言写成的文件称为网页或页面
-是一种解释型语言
-由Web浏览器解释执行
-
-HTML5文档结构12345678910&lt;!DOCTYPE html&gt;   
+                            并行计算相关go on~排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。
+好了言归正传，这是一篇学习MPI的相关笔记。
+MPI基础
+MPI
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-19
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/前端/" class="post-category" target="_blank">
-                                    前端
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            tannl
                             
                         </span>
                     </div>
@@ -759,8 +705,12 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/HTML/" target="_blank">
-                        <span class="chip bg-color">HTML</span>
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
+                    </a>
+                    
+                    <a href="/tags/并行计算/" target="_blank">
+                        <span class="chip bg-color">并行计算</span>
                     </a>
                     
                 </div>
