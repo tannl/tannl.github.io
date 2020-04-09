@@ -477,6 +477,12 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
 <p>同步通信模式的开始不依赖于接收进程相应的接收操作是否启动，但是同步发送却必须等到相应的接收进程开始后才可以正确返回。    </p>
 <p>用于测试消息中数据个数的函数:</p>
 <pre><code>int MPI_Get_count(MPI_Status *status,MPI_datatype datatype, int *count)</code></pre><h4 id="就绪通信模式"><a href="#就绪通信模式" class="headerlink" title="就绪通信模式"></a>就绪通信模式</h4><p><strong>MPI_RSEND(buf,count,datatype,dest,tag,comm)</strong><br>在就绪通信模式中，只有当接收操作已经启动时，才可以在发送进程启动发送操作，否则发送操作将出错。对于非阻塞发送操作的正确返回，并不意味着发送已经完成，但对于阻塞发送的正确返回，则发送缓冲区可以重复使用。</p>
+<h3 id="阻塞通信"><a href="#阻塞通信" class="headerlink" title="阻塞通信"></a>阻塞通信</h3><p>当一个阻塞通信正确返回后，</p>
+<ul>
+<li>该调用要求的通信操作已正确完成 即消息已成功发出或成功接收 </li>
+<li>该调用的缓冲区可用 若是发送操作，则该缓冲区可以被其它的操作更新。若是接收操作，该缓冲区中的数据已经完整，可以被正确引用。</li>
+</ul>
+<p><strong>在阻塞通信中，对于接收进程 在接收消息时，除了要求接收到的消息的消息信封和接收操作自身的消息信封相一致外，还要求它接收到的消息是最早发送给自己的消息。</strong></p>
 
             </div>
             <hr/>
@@ -693,7 +699,8 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            高级MPI并行程序设计这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。
+非阻塞通信的MPI程序设计非阻塞通信主要用于实现计算与通信的重叠。所有阻塞通信的
                         
                     </div>
                     <div class="publish-info">
@@ -707,6 +714,18 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
+                    </a>
+                    
+                    <a href="/tags/并行计算/" target="_blank">
+                        <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
                 </div>
                 
             </div>

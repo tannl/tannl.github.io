@@ -5,7 +5,8 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="并行计算--MPI（二）, Tannl&#39;s Blog">
-    <meta name="description" content="并行计算--MPI（二） | Tannl&#39;s Blog">
+    <meta name="description" content="高级MPI并行程序设计这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。
+非阻塞通信的MPI程序设计非阻塞通信主要用于实现计算与通信的重叠。所有阻塞通信的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -400,9 +401,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/MPI/" target="_blank">
+                                <span class="chip bg-color">MPI</span>
+                            </a>
+                        
+                            <a href="/tags/并行计算/" target="_blank">
+                                <span class="chip bg-color">并行计算</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -429,7 +438,177 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="高级MPI并行程序设计"><a href="#高级MPI并行程序设计" class="headerlink" title="高级MPI并行程序设计"></a>高级MPI并行程序设计</h2><p>这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。</p>
+<h3 id="非阻塞通信的MPI程序设计"><a href="#非阻塞通信的MPI程序设计" class="headerlink" title="非阻塞通信的MPI程序设计"></a>非阻塞通信的MPI程序设计</h3><p>非阻塞通信主要用于实现计算与通信的重叠。<strong>所有阻塞通信的形式都有相应的非阻塞通 信的形式。</strong></p>
+<p><img src="/2020/04/01/并行计算-MPI（二）/01.png" alt></p>
+<p><img src="/2020/04/01/并行计算-MPI（二）/02.png" alt></p>
+<h4 id="非阻塞标准发送和接收"><a href="#非阻塞标准发送和接收" class="headerlink" title="非阻塞标准发送和接收"></a>非阻塞标准发送和接收</h4><p><strong>MPI_ISEND(buf, count, datatype, dest, tag, comm, request)</strong></p>
+<p><strong>MPI_IRECV(buf, count, datatype, source, tag, comm, request)</strong></p>
+<p>MPI_ISend和MPI_IRecv启动操作后立即返回，和阻塞发送和接收调用相比，它多了一个接受返回的参数<strong>request</strong>。这一参数是非阻塞通信对象。通过对这一对象的查询，就可以知道与之相应的非阻塞发送和接收是否完成。</p>
+<pre><code>int MPI_Irecv(void* buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><br>
+
+
+<pre><code>int MPI_Isend(void* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><h4 id="非阻塞通信与其他三种通信模式的组合"><a href="#非阻塞通信与其他三种通信模式的组合" class="headerlink" title="非阻塞通信与其他三种通信模式的组合"></a>非阻塞通信与其他三种通信模式的组合</h4><p>MPI使用与阻塞通信一样的命名，约定前缀B,S,R分别表示缓存通信模式，同步通信模式和就绪通信模式,前缀I(immediate) 表示这个调用是非阻塞的。    </p>
+<p>①<strong>MPI_ISSEND</strong>开始一个同步模式的非阻塞发送 它的返回只是意味着相应的接收操作已经启动,并不表示消息发送的完成。</p>
+<pre><code>int MPI_Issend(void* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><p>②<strong>MPI_IBSEND</strong>开始一个缓存模式的非阻塞发送 与阻塞发送一样 它也需要程序员主动 为该发送操作提供发送缓冲区。</p>
+<pre><code>int MPI_Ibsend(void* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><p>③<strong>MPI_IRSEND</strong>开始一个接收就绪通信模式非阻塞发送 与阻塞通信一样，它也要求当这 一调用启动之前 相应的接收操作必须已经启动，否则回出错。</p>
+<pre><code>int MPI_Irsend(void* buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><h4 id="非阻塞通信的完成"><a href="#非阻塞通信的完成" class="headerlink" title="非阻塞通信的完成"></a>非阻塞通信的完成</h4><p>不管非阻塞通信是什么样的形式 对于完成调用是不加区分的。</p>
+<h5 id="单个非阻塞调用的完成"><a href="#单个非阻塞调用的完成" class="headerlink" title="单个非阻塞调用的完成"></a>单个非阻塞调用的完成</h5><p>MPI有两个接口来实现对非阻塞通信是否完成的监控。</p>
+<ul>
+<li><p><strong>MPI_WAIT(request, status)</strong></p>
+<p>输入输出： request，非阻塞通信对象</p>
+<p>输出： status，返回的状态</p>
+</li>
+</ul>
+<p>MPI_WAIT以非阻塞通信对象为参数，一直等到与该非阻塞通信对象相应的非阻塞通信完成后才返回，同时释放该阻塞通信对象 ，不需要再显式释放该对象。与该非阻塞通信完成有关的信息放在返回的状态参数status中。</p>
+<pre><code>int MPI_Wait(MPI_Request *request, MPI_Status *status)</code></pre><ul>
+<li><p><strong>MPI_TEST(request, flag, status)</strong></p>
+<p>输入输出：request，非阻塞通信对象</p>
+<p>输出： flag，操作是否完成的标志</p>
+<p>输出： status，返回的状态</p>
+</li>
+</ul>
+<p>这个接口与wait的区别是，他不必等待非阻塞通信对象所相应的通信结束才返回。若在调用MPI_TEST时，该非阻塞通信已经结束，则完成标志flag=true。若非阻塞通信还没有完成，则它不必等待该非阻塞通信的完成，可以直 接返回，但是完成标志flag=false，同时也<u>不释放相应的非阻塞通信对象</u>。</p>
+<pre><code>int MPI_Wait(MPI_Request *request, MPI_Status *status)</code></pre><h5 id="多个非阻塞调用的完成"><a href="#多个非阻塞调用的完成" class="headerlink" title="多个非阻塞调用的完成"></a>多个非阻塞调用的完成</h5><p>除了一次完成一个非阻塞通信的调用外，MPI还提供其它的调用，可以一次完成多个已经启动的非阻塞通信调用。</p>
+<ul>
+<li><p>*<em>MPI_WAITANY(count, array_of_requests, index, status) *</em></p>
+<p>输入： count，非阻塞通信对象的个数</p>
+<p>输入输出：arrary_of_requests,非阻塞通信完成对象数组（句柄数组）</p>
+<p>输出： index，完成对象对应的句柄索引</p>
+<p>输出：status，返回的状态</p>
+</li>
+</ul>
+<p>MPI_WAITANY用于等待非阻塞通信对象表中<u>任何</u>一个非阻塞通信对象的完成,<u>释放已完成的非阻塞通信对象</u>,然后返回 MPI_WAITANY返回后index=i,即MPI_WAITANY完成的是非阻塞通信对象表中的第i个对象对应的非阻塞通信,则其效果等价于调用了MPI_WAIT(array_of_requests[I],status)。</p>
+<pre><code>int MPI_Waitany(int count, MPI_Request *array_of_requests, int *index, MPI_Status *status)</code></pre><ul>
+<li><p><strong>MPI_WAITALL( count, array_of_requests, array_of_statuses)</strong></p>
+<p>输入： count，非阻塞通信对象的个数</p>
+<p>输入输出：arrary_of_requests,非阻塞通信完成对象数组（句柄数组）</p>
+<p>输出：array_of_statuses，状态数组</p>
+</li>
+</ul>
+<p>MPI_WAITALL必须等到非阻塞通信对象表中<u>所有的非阻塞通信对象</u>相应的非阻塞操作都完成后才返回。</p>
+<pre><code>int MPI_Waitall(int count, MPI_Request *array_of_requests, MPI_Status *array_of_statuses)</code></pre><ul>
+<li><p><strong>MPI_WAITSOME(incount,array_of_requests,outcount,array_of_indices,array_of_statuses)</strong></p>
+<p>IN incount               非阻塞通信对象的个数(整型)</p>
+<p>INOUT array_of_requests   非阻塞通信对象数组(句柄数组) </p>
+<p>OUT outcount            已完成对象的数目(整型) </p>
+<p>OUT array_of_indices      已完成对象的下标数组(整型数组) </p>
+<p>OUT array_of_statuses      已完成对象的状态数组(状态数组)</p>
+</li>
+</ul>
+<p>MPI_WAITSOME只要<u>有一个或多个非阻塞通信完成</u>，则该调用就返回。完成非阻塞通信的对象的个数记录在outcount中，相应下标记录在数组array_of_indices中，完成对象的状态记录在状态数组array_of_statuses。</p>
+<pre><code>int MPI_Waitsome(int incount,MPI_Request *array_of_request, int *outcount, int *array_of_indices, MPI_Status *array_of_statuses)</code></pre><ul>
+<li><p><strong>MPI_TESTANY(count, array_of_requests, index, flag, status)</strong></p>
+<p>IN count               非阻塞通信对象的个数(整型) </p>
+<p>INOUT array_of_requests 非阻塞通信对象数组(句柄数组) </p>
+<p>OUT index             非阻塞通信对象的索引或MPI_UNDEFINED (整型) </p>
+<p>OUT flag              是否有对象完成(逻辑型) </p>
+<p>OUT status             状态(状态类型)</p>
+</li>
+</ul>
+<p>MPI_TESTANY用于测试非阻塞通信对象表中是否有<u>任何一个对象</u>已经完成，用flag来记录有则true，无则false返回。</p>
+<pre><code>int MPI_Testany(int count, MPI_Request *array_of_requests, int *index, int *flag, MPI_Status *status)</code></pre><ul>
+<li><p><strong>MPI_TESTALL(count, array_of_requests, flag, array_of_statuses)</strong></p>
+<p>IN count               非阻塞通信对象的个数(整型) </p>
+<p>INOUT array_of_requests 非阻塞通信对象数组(句柄数组) </p>
+<p>OUT flag              所有非阻塞通信对象是否都完成(逻辑型) </p>
+<p>OUT array_of_statuses   状态数组(状态数组)</p>
+</li>
+</ul>
+<p>MPI_TESTALL只有当<u>所有的非阻塞通信对象都完成</u>时，才使得flag=true返回，并且<u>释放所有的查询对象</u>，只要有一个非阻塞通信对象没有完成 ，则令flag=false立即返回。</p>
+<pre><code>int MPI_Testall(int count, MPI_Request *array_of_requests, int *flag, MPI_Status *array_of_statuses)</code></pre><ul>
+<li><p><strong>MPI_TESTSOME(incount,array_of_requests,outcount,array_of_indices,array_of_statuses)</strong></p>
+<p>IN incount              非阻塞通信对象的个数(整型) </p>
+<p>INOUT array_of_requests  非阻塞通信对象数组(句柄数组) </p>
+<p>OUT outcount           已完成对象的数目(整型) </p>
+<p>OUT array_of_indices     已完成对象的下标数组(整型数组) </p>
+<p>OUT array_of_statuses    已完成对象的状态数组(状态数组)</p>
+</li>
+</ul>
+<p>MPI_TESTSOME和MPI_WAITSOME类似 只不过它可以<u>立即返回</u> ,outcount记录完成的个数。</p>
+<pre><code>int MPI_Testsome(int incount,MPI_Request *array_of_request, int *outcount, int *array_of_indices, MPI_Status *array_of_statuses)</code></pre><h4 id="非阻塞通信对象"><a href="#非阻塞通信对象" class="headerlink" title="非阻塞通信对象"></a>非阻塞通信对象</h4><p> 非阻塞通信对象是MPI内部的对象，通过一个句柄存取，使用非阻塞通信对象可以识别非阻塞通信操作的各种特性，例如发送模式和它联结的通信缓冲区，通信上下文，用于发送的标识和目的参数，或用于接收的标识和源参数， 此外非阻塞通信对象还存储关于这个挂起通信操作状态的信息。</p>
+<h5 id="取消非阻塞通信对象"><a href="#取消非阻塞通信对象" class="headerlink" title="取消非阻塞通信对象"></a>取消非阻塞通信对象</h5><ul>
+<li><p><strong>MPI_CANCEL(request)</strong></p>
+<p>IN request       非阻塞通信对象(句柄）</p>
+</li>
+</ul>
+<p>取消调用并不意味着相应的通信一定会被取消。若取消操作调用时相应的非阻塞通信已经开始 ，则它会正常完成 。若取消操作调用时相应的非阻塞通信还没有开始，则可以释放通信占用的资源，取消该非阻塞通信，对于非阻塞通信，即使调用了取消操作，也<u>必须调用非阻塞通信的完成操作或查询对象的释放操作来释放查询对象</u>。如果一个非阻塞通信已经被执行了取消操作,则该通信的MPI_WAIT或MPI_TEST将<u>释放取消通信的非阻塞通信对象</u>，并且在返回结果status中指明该通信已经被取消。</p>
+<p>这是一个<u>立即返回</u>的调用。</p>
+<pre><code>int MPI_Cancel(MPI_Request *request)</code></pre><ul>
+<li><p><strong>MPI_TEST_CANCELLED(status,flag)</strong></p>
+<p> IN status       状态 (状态类型)     </p>
+<p>OUT flag       是否取消标志(逻辑类型)</p>
+</li>
+</ul>
+<p>该接口用于测试一个通信操作是否被取消，flag=true则取消成功。</p>
+<pre><code>int MPI_Test_cancelled(MPI_Status status, int *flag)</code></pre><h5 id="释放非阻塞通信对象"><a href="#释放非阻塞通信对象" class="headerlink" title="释放非阻塞通信对象"></a>释放非阻塞通信对象</h5><p>除了调用非阻塞对象的完成操作可以取消非阻塞对象，还提供了一个接口用于取消该对象。</p>
+<ul>
+<li><p><strong>MPI_REQUEST_FREE(request)</strong></p>
+<p>INOUT request      非阻塞通信对象</p>
+</li>
+</ul>
+<p>一旦执行了释放操作，非阻塞通信对象就无法再通过其它任何的调用访问。request变为MPI_REQUEST_NULL 。如果与该非阻塞通信对象相联系的通信还没有完成，则该对象的资源<u>并不会立即释放</u>，它将等到<u>该非阻塞通信结束后再释放</u>。</p>
+<pre><code>int MPI_Request_free(MPI_Request * request)</code></pre><h4 id="消息到达的检查"><a href="#消息到达的检查" class="headerlink" title="消息到达的检查"></a>消息到达的检查</h4><p>在执行接收操作先，可以先调用接口检查相应发送的消息是否到达。</p>
+<ul>
+<li><p><strong>MPI_PROBE (source,tag,cmm,status)</strong></p>
+<p>IN source       源进程标识或任意进程标识MPI_ANY_SOURCE(整型)     </p>
+<p>IN tag          特定tag值或任意tag值MPI_ANY_TAG 整型     </p>
+<p>IN comm       通信域 句柄     </p>
+<p>OUT status     返回的状态 状态类型</p>
+</li>
+</ul>
+<p>该接口为<u>阻塞调用</u>。</p>
+<pre><code>int MPI_Probe(int source,int tag,MPI_Comm comm,MPI_Status *status)</code></pre><ul>
+<li><p><strong>MPI_IPROBE(source,tag,comm,flag,status)</strong></p>
+<p>IN source    源进程标识或任意进程标识MPI_ANY_SOURCE 整型     </p>
+<p>IN tag       特定tag值或任意tag值MPI_ANY_TAG 整型     </p>
+<p>IN comm     通信域 句柄     </p>
+<p>OUT flag     是否有消息到达标志 逻辑</p>
+<p>OUT status    返回的状态 状态类型 </p>
+</li>
+</ul>
+<p>相应的非阻塞调用，flag记录是否有相应信封的消息到达。若flag=true，MPI_IPROBE的status和MPI_RECV的status的返回值相同，否则status为空。MPI_IPROBE的source参数可以是MPI_ANY_SOURCE tag参数，可以是MPI_ANY_TAG ，以便用户可以检查来自不确定的源source以及不确定的标识tag 。</p>
+<pre><code>int MPI_Iprobe(int source,int tag,MPI_Comm comm,int *flag, MPI_Status *status)</code></pre><p><strong>注意：非阻塞通信和阻塞通信相同，符合<u>有序接收</u>的语义约束。</strong></p>
+<h4 id="重复非阻塞通信"><a href="#重复非阻塞通信" class="headerlink" title="重复非阻塞通信"></a>重复非阻塞通信</h4><p>重复非阻塞通信需要如下步骤 ：</p>
+<p>1 通信的初始化 比如MPI_SEND_INIT </p>
+<p>2 启动通信 MPI_START                                         </p>
+<p>（ 重复 ）</p>
+<p>3 完成通信 MPI_WAIT </p>
+<p>4 释放查询对象 MPI_REQUEST_FREE</p>
+<p>当不需要再进行通信时，必须通过显式的语句MPI_REQUEST_FREE将非阻塞通信对象释放掉。只有当该对象成为非活动状态时才可以被取消。</p>
+<p>根据通信模式的不同,重复非阻塞通信也有四种不同的形式 即标准模式 同步模式 缓存模式和就绪模式。</p>
+<p><strong>标准模式：</strong></p>
+<pre><code>int MPI_Send_init(void* buf, int count, MPI_Data type,int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></pre><p><strong>同步模式：</strong></p>
+<pre><code>int MPI_Bsend_init(void* buf,int count,MPI_Datatype datatype,int dest, int tag, MPI_Comm comm,MPI_Request *request)</code></pre><p><strong>缓存模式：</strong></p>
+<pre><code>int MPI_Ssend_init(void* buf,int count,MPI_Datatype datatype,int dest, int tag, MPI_Comm comm,MPI_Request *request)</code></pre><p><strong>就绪模式：</strong></p>
+<pre><code>int MPI_Rsend_init(void* buf,int count,MPI_Datatype datatype,int dest, int tag, MPI_Comm comm,MPI_Request *request) </code></pre><p>创建一个标准模式的重复非阻塞通信的接收操作：</p>
+<ul>
+<li><p><strong>MPI_RECV_INIT(buf,count,datatype,source,tag,comm,request)</strong></p>
+<p>OUT buf        接收缓冲区初始地址(可选数据类型)     </p>
+<p>IN count        接收数据的最大个数(整型)     </p>
+<p>IN datatype      接收数据的数据类型(句柄)     </p>
+<p>IN source       发送进程的标识或任意进程MPI_ANY_SOURCE(整型)     </p>
+<p>IN tag          消息标识或任意标识MPI_ANY_TAG(整型)     </p>
+<p>IN comm        通信域(句柄)     </p>
+<p>OUT request    非阻塞通信对象(句柄)</p>
+<p>  int MPI_Recv_init(void* buf,int count,MPI_Datatype datatype,int source, int tag, MPI_Comm comm,MPI_Request *request) </p>
+</li>
+</ul>
+<p>重复非阻塞通信的激活操作：</p>
+<ul>
+<li><p><strong>MPI_START(request)</strong></p>
+<p>INOUT request      非阻塞通信对象(句柄) </p>
+</li>
+</ul>
+<p>request参数是一个由初始化非阻塞重复调用返回的句柄 。一个用MPI_SEND_INIT创建的非阻塞重复通信对象来调用MPI_START产生的通信和用 MPI_ISEND调用产生的通信效果一样 。其他同理。</p>
+<pre><code>int MPI_Start(MPI_Request *request)</code></pre><ul>
+<li><p>*<em>MPI_STARTALL(count,array_of_requests) *</em></p>
+<p>IN count               开始非阻塞通信对象的个数 (整型)     </p>
+<p>IN array_of_requests     非阻塞通信对象数组(句柄队列)</p>
+</li>
+</ul>
+<p>一个用MPI_START 初始化的发送操作可以被任何接收操作匹配,类似地,一个用 MPI_START初始化的接收操作可以接收任何发送操作产生的消息.</p>
+<pre><code>int MPI_Startall(int count, MPI_Request *array_of_requests)</code></pre>
             </div>
             <hr/>
 
@@ -646,7 +825,8 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            高级MPI并行程序设计这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。
+非阻塞通信的MPI程序设计非阻塞通信主要用于实现计算与通信的重叠。所有阻塞通信的
                         
                     </div>
                     <div class="publish-info">
@@ -662,6 +842,18 @@
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
+                    </a>
+                    
+                    <a href="/tags/并行计算/" target="_blank">
+                        <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
