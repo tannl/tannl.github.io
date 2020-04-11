@@ -403,12 +403,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MPI/" target="_blank">
-                                <span class="chip bg-color">MPI</span>
-                            </a>
-                        
                             <a href="/tags/并行计算/" target="_blank">
                                 <span class="chip bg-color">并行计算</span>
+                            </a>
+                        
+                            <a href="/tags/MPI/" target="_blank">
+                                <span class="chip bg-color">MPI</span>
                             </a>
                         
                     </div>
@@ -608,7 +608,119 @@
 </li>
 </ul>
 <p>一个用MPI_START 初始化的发送操作可以被任何接收操作匹配,类似地,一个用 MPI_START初始化的接收操作可以接收任何发送操作产生的消息.</p>
-<pre><code>int MPI_Startall(int count, MPI_Request *array_of_requests)</code></pre>
+<pre><code>int MPI_Startall(int count, MPI_Request *array_of_requests)</code></pre><h3 id="组通信MPI程序设计"><a href="#组通信MPI程序设计" class="headerlink" title="组通信MPI程序设计"></a>组通信MPI程序设计</h3><p>组通信一般实现三个功能，通信、同步和计算 。对于组通信，按通信的方向的不同，又可以分为以下三种 ：一对多通信、多对一通信和多对多通信。</p>
+<p>MPI组通信的<strong>计算功能</strong>是分三步实现的,首先是通信的功能,即消息根据要求发送到目的进程,目的进程也已经接收到了各自所需要的消息,然后是对消息的处理,即计算部分,MPI组通信有计算功能的调用都指定了计算操作,用给定的计算操作对接收到的数据进行处理,最后一步是将处理结果放入指定的接收缓冲区。</p>
+<h4 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h4><ul>
+<li><p><strong>MPI_BCAST(buffer,count,datatype,root,comm)</strong></p>
+<p>IN/OUT   buffer     通信消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN        count     将广播出去/或接收的数据个数(整型) </p>
+<p>IN        datatype   广播/接收数据的数据类型(句柄) </p>
+<p>IN        root       广播数据的根进程的标识号(整型) </p>
+<p>IN        comm     通信域</p>
+</li>
+</ul>
+<p>一对多通信：对于广播操作的调用，不管是广播进程还是接收进程，在调用形式上完全一致。其执行结 果是将根进程通信消息缓冲区中的消息拷贝到其他所有进程中去。</p>
+<pre><code>int MPI_Bcast(void* buffer,int count,MPI_Datatype datatype,int root, MPI_Comm comm) </code></pre><h4 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h4><ul>
+<li><p><strong>MPI_GATHER(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, root , comm)</strong></p>
+<p>IN  sendbuf     发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  sendcount   发送消息缓冲区中的数据个数(整型) </p>
+<p>IN  sendtype    发送消息缓冲区中的数据类型(句柄) </p>
+<p>OUT recvbuf    接收消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  recvcount   待接收的元素个数(整型,仅对于根进程有意义) </p>
+<p>IN  recvtype    接收元素的数据类型(句柄,仅对于根进程有意义) </p>
+<p>IN  root        接收进程的序列号(整型) </p>
+<p>IN  comm      通信域(句柄)</p>
+</li>
+</ul>
+<p>多对一通信：每个调用这个接口的函数都执行发送操作，但接收消息仅对于根进程有效。其结果就象一个进程组中的N个进程，包括根进程在内，都执行了一个发送调用，同时根进程执行了N次接收调用 。根进程根据发送进程的进程标识的序号即进程的rank值，将它们各自的消息依次存放到自已的消息缓冲区中 。<u>从各个进程收集到的数据的个数必须相同</u>。</p>
+<pre><code>int MPI_Gather(void* sendbuf, int sendcount, MPI_Datatype sendtype, void* recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm)</code></pre><ul>
+<li><p><strong>MPI_GATHERV(sendbuf, sendcount, sendtype, recvbuf, recvcounts, displs,recvtype, root, comm)</strong></p>
+<p>IN     sendbuf      发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN     sendcount    发送消息缓冲区中的数据个数(整型) </p>
+<p>IN     sendtype     发送消息缓冲区中的数据类型(句柄) </p>
+<p>OUT    recvbuf     接收消息缓冲区的起始地址(可选数据类型,仅对于根进程有意义) </p>
+<p><u>IN     recvcounts    整型数组(长度为组的大小), 其值为从每个进程接收的数据个数</u></p>
+<p><u>IN     displs        整数数组,每个入口表示相对于recvbuf的位移</u></p>
+<p>IN     recvtype      接收消息缓冲区中数据类型 (句柄) </p>
+<p>IN     root         接收进程的标识号(句柄) </p>
+<p>IN     comm       通信域(句柄)</p>
+</li>
+</ul>
+<p>这个接口同样为多对一通信的收集调用，与MPI_GATHER不同的是，根从每一个进程接收的数据元素的个数可以不同，但是发送和接收的个数必须一致。除此之外，它还为每一个接收消息在接收缓冲区的位置提供了一个位置偏移displs数组，用户可以将接收的数据存放到根进程消息缓冲区的任意位置 。</p>
+<pre><code>int MPI_Gatherv(void* sendbuf, int sendcount, MPI_Datatype sendtype, void* recvbuf, int *recvcounts, int *displs, MPI_Datatype recvtype, int root, MPI_Comm comm)</code></pre><h4 id="散发"><a href="#散发" class="headerlink" title="散发"></a>散发</h4><ul>
+<li><p><strong>MPI_SCATTER(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, root,comm)</strong></p>
+<p>IN   sendbuf      发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN   sendcount    发送到各个进程的数据个数(整型) </p>
+<p>IN   sendtype     发送消息缓冲区中的数据类型(句柄) </p>
+<p>OUT  recvbuf     接收消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN   recvcount    待接收的元素个数(整型) </p>
+<p>IN   recvtype     接收元素的数据类型(句柄) </p>
+<p>IN   root         发送进程的序列号(整型) </p>
+<p>IN   comm       通信域(句柄)</p>
+</li>
+</ul>
+<p>MPI_SCATTER是一对多的组通信调用，和广播不同，ROOT向各个进程发送的数据可以是不同的。根进程发送元素个数指的是发送给每一个进程的数据元素的个数，而不是总的数据个数 。MPI_SCATTER和MPI_GATHER的效果正好相反，两者互为逆操作。</p>
+<ul>
+<li><p><strong>MPI_SCATTERV(sendbuf, sendcounts, displs, sendtype, recvbuf, recvcount, recvtype, root, comm)</strong></p>
+<p>IN   sendbuf      发送消息缓冲区的起始地址(可选数据类型) </p>
+<p><u>IN   sendcounts    发送数据的个数整数数组 (整型)</u></p>
+<p><u>IN   displs        发送数据偏移 整数数组(整型)</u></p>
+<p>IN   sendtype     发送消息缓冲区中元素类型(句柄) </p>
+<p>OUT  recvbuf     接收消息缓冲区的起始地址(可变) </p>
+<p>IN   recvcount    接收消息缓冲区中数据的个数(整型) </p>
+<p>IN   recvtype     接收消息缓冲区中元素的类型(句柄) </p>
+<p>IN   root         发送进程的标识号(句柄) </p>
+<p>IN   comm       通信域(句柄)</p>
+</li>
+</ul>
+<p>MPI_SCATTERV对MPI_SCATTER的功能进行了扩展,它允许ROOT向各个进程发送个数不等的数据。因此要求sendcounts是一个数组，同时还提供一个新的参数displs指明根进程发往其它不同进程数据在根发送缓冲区中的偏移位置。</p>
+<pre><code>int MPI_Scatterv(void* sendbuf, int *sendcounts, int *displs, MPI_Datatype sendtype, void* recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm) </code></pre><h4 id="组收集"><a href="#组收集" class="headerlink" title="组收集"></a>组收集</h4><ul>
+<li><p><strong>MPI_ALLGATHER(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype,comm)</strong></p>
+<p>参数类型与MPI_GATHER完全一致。</p>
+</li>
+</ul>
+<p>MPI_GATHER是将数据收集到ROOT进程，而MPI_ALLGATHER相当于每一个进程都作为ROOT执行了一次MPI_GATHER调用 ，即每一个进程都收集到了其它所有进程的数据。</p>
+<ul>
+<li><p><strong>MPI_ALLGATHERV(sendbuf, sendcount, sendtype, recvbuf, recvcounts, displs, recvtype, comm)</strong></p>
+<p>参数类型与MPI_GATHERV完全一致。</p>
+</li>
+</ul>
+<p>MPI_ALLGATHERV也是所有的进程都将接收结果，而不是只有根进程接收结果。从每个进程发送的第j块数据将被每个进程接收，然后存放在各个进程接收消息缓冲区recvbuf的第j块，进程j的sendcount和sendtype的类型必须和其他所有进程的recvcounts[j]和recvtype相同。</p>
+<h4 id="全互换"><a href="#全互换" class="headerlink" title="全互换"></a>全互换</h4><ul>
+<li><p><strong>MPI_ALLTOALL(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm)</strong></p>
+<p>IN  sendbuf     发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  sendcount   发送到每个进程的数据个数(整型) </p>
+<p>IN  sendtype    发送消息缓冲区中的数据类型(句柄) </p>
+<p>OUT recvbuf     接收消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  recvcount    从每个进程中接收的元素个数(整型) </p>
+<p>IN  recvtype     接收消息缓冲区的数据类型(句柄) </p>
+<p>IN  comm       通信域(句柄)</p>
+</li>
+</ul>
+<p>MPI_ALLTOALL是组内进程之间完全的消息交换，其中每一个进程都相其它所有的进程发送消息，同时每一个进程都从其它所有的进程接收消息。每个进程和根进程之间，发送的数据量必须和接收的数据量相等。调用MPI_ALLTOALL相当于每个进程依次将它的发送缓冲区的第i块数据发送给第i个进程，同时每个进程又都依次从第j个进程接收数据放到各自接收缓冲区的第j块数据区的位置。</p>
+<p><img src="/2020/04/01/并行计算-MPI（二）/03.png" alt></p>
+<pre><code>int MPI_Alltoall(void* sendbuf, int sendcount, MPI_Datatype sendtype,void* recvbuf,int recvcount, MPI_Datatype recvtype,MPI_Comm comm)</code></pre><ul>
+<li><p><strong>MPI_ALLTOALLV(sendbuf, sendcounts, sdispls, sendtype, recvbuf, recvcounts, rdispls, recvtype, comm)</strong></p>
+<p>IN  sendbuf      发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  sendcounts    向每个进程发送的数据个数(整型数组) </p>
+<p>IN  sdispls       向每个进程发送数据的位移 整型数组 </p>
+<p>IN  sendtype     发送数据的数据类型(句柄) </p>
+<p>OUT recvbuf      接收消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN  recvcounts    从每个进程中接收的数据个数(整型数组) </p>
+<p>IN  rdispls       从每个进程接收的数据在接收缓冲区的位移 整型数组 </p>
+<p>IN  recvtype     接收数据的数据类型(句柄) </p>
+<p>IN  comm        通信域(句柄)</p>
+</li>
+</ul>
+<p>MPI_ALLTOALLV 在 MPI_ALLTOALL的基础上进一步增加了灵活性。它可以由sdispls指定待发送数据的位置，在接收方则由rdispls指定接收的数据存放在缓冲区的偏移量 。</p>
+<p>MPI_ALLTOALL和MPI_ALLTOALLV可以实现n次独立的点对点通信 但也有限制 ：</p>
+<p>1) 所有数据必须是同一类型 </p>
+<p>2)所有的消息必须按顺序进行散发和收集</p>
+<h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><ul>
+<li><strong>MPI_BARRIER(comm)</strong></li>
+</ul>
+<p>MPI_BARRIER阻塞所有的调用者直到所有的组成员都调用了它，各个进程中这个调用才可以返回 。</p>
+<pre><code>int MPI_Barrier(MPI_Comm comm)</code></pre><h4 id="规约"><a href="#规约" class="headerlink" title="规约"></a>规约</h4>
             </div>
             <hr/>
 
@@ -845,12 +957,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
-                    </a>
-                    
                     <a href="/tags/并行计算/" target="_blank">
                         <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
                     </a>
                     
                 </div>
@@ -897,12 +1009,12 @@ MPI
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
-                    </a>
-                    
                     <a href="/tags/并行计算/" target="_blank">
                         <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
                     </a>
                     
                 </div>
