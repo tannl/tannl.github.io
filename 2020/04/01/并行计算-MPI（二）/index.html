@@ -403,12 +403,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MPI/" target="_blank">
-                                <span class="chip bg-color">MPI</span>
-                            </a>
-                        
                             <a href="/tags/并行计算/" target="_blank">
                                 <span class="chip bg-color">并行计算</span>
+                            </a>
+                        
+                            <a href="/tags/MPI/" target="_blank">
+                                <span class="chip bg-color">MPI</span>
                             </a>
                         
                     </div>
@@ -720,7 +720,39 @@
 <li><strong>MPI_BARRIER(comm)</strong></li>
 </ul>
 <p>MPI_BARRIER阻塞所有的调用者直到所有的组成员都调用了它，各个进程中这个调用才可以返回 。</p>
-<pre><code>int MPI_Barrier(MPI_Comm comm)</code></pre><h4 id="规约"><a href="#规约" class="headerlink" title="规约"></a>规约</h4>
+<pre><code>int MPI_Barrier(MPI_Comm comm)</code></pre><h4 id="规约"><a href="#规约" class="headerlink" title="规约"></a>规约</h4><ul>
+<li><p><strong>MPI_REDUCE(sendbuf,recvbuf,count,datatype,op,root,comm)</strong></p>
+<p> IN   sendbuf    发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>OUT  recvbuf   接收消息缓冲区中的地址(可选数据类型) </p>
+<p>IN   count      发送消息缓冲区中的数据个数(整型) </p>
+<p>IN   datatype   发送消息缓冲区的元素类型(句柄) </p>
+<p>IN   op        归约操作符(句柄) </p>
+<p>IN   root       根进程序列号(整型) </p>
+<p>IN   comm      通信域(句柄)</p>
+</li>
+</ul>
+<p>MPI_REDUCE将组内每个进程输入缓冲区中的数据按给定的操作op进行运算，并将其结果返回到序列号为root的进程的输出缓冲区中。要求发送和接收的元素数目和类型都必须相同。</p>
+<pre><code>int MPI_Reduce(void* sendbuf, void* recvbuf, int count, PI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm) </code></pre><p><img src="/2020/04/01/并行计算-MPI（二）/04.png" alt="MPI规约操作"></p>
+<ul>
+<li>*<em>MPI_ALLREDUCE(sendbuf, recvbuf, count, datatype, op, comm) *</em></li>
+</ul>
+<p>组规约：组归约MPI_ALLREDUCE就，相当于组中每一个进程都作为ROOT分别进行了一次归约操作。即归约的结果不只是某一个 进程拥有 而是所有的进程都拥有。</p>
+<ul>
+<li><strong>MPI_REDUCE_SCATTER(sendbuf, recvbuf, recvcounts, datatype, op, comm)</strong></li>
+</ul>
+<p>规约并发散：参数设置与规约操作相同。MPI_REDUCE_SCATTER操作可以认为是MPI对每个归约操作的变形，它将归约结果分 散到组内的所有进程中去，而不是仅仅归约到ROOT进程。</p>
+<h4 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h4><ul>
+<li><p><strong>MPI_SCAN(sendbuf, recvbuf, count, datatype, op, comm)</strong></p>
+<p>IN    sendbuf    发送消息缓冲区的起始地址(可选数据类型) </p>
+<p>OUT  recvbuf    接收消息缓冲区的起始地址(可选数据类型) </p>
+<p>IN    count      输入缓冲区中元素的个数(整型) </p>
+<p>IN    datatype    输入缓冲区中元素的类型(句柄) </p>
+<p>IN    op         操作(句柄) </p>
+<p>IN   comm       通信域(句柄)</p>
+</li>
+</ul>
+<p>可以将扫描看作是一种特殊的归约，即每一个进程都对排在它前面的进程进行归约操作。MPI_SCAN调用的结果是 对于每一个进程i，它对进程0,…,i的发送缓冲区的数据进行指定的归约操作 结果存入进程i的接收缓冲区 。</p>
+
             </div>
             <hr/>
 
@@ -957,12 +989,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
-                    </a>
-                    
                     <a href="/tags/并行计算/" target="_blank">
                         <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
                     </a>
                     
                 </div>
@@ -1009,12 +1041,12 @@ MPI
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
-                    </a>
-                    
                     <a href="/tags/并行计算/" target="_blank">
                         <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
                     </a>
                     
                 </div>
