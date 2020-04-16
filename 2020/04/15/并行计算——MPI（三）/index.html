@@ -4,11 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="并行计算——MPI(一), Tannl&#39;s Blog">
-    <meta name="description" content="并行计算相关go on~排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。
-好了言归正传，这是一篇学习MPI的相关笔记。
-MPI基础
-MPI">
+    <meta name="keywords" content="并行计算——MPI（三）, Tannl&#39;s Blog">
+    <meta name="description" content="高级并行程序设计具有不连续数据发送的程序设计MPI除了可以发送或接收连续的数据之外，还可以处理不连续的数据，其基本方法有两种：一是允许用户自定义新的数据类型，又称派生数据类型；二是数据的打包与解包，即在发送方将不连续的数据打包到连续的区域，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +13,7 @@ MPI">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>并行计算——MPI(一) | Tannl&#39;s Blog</title>
+    <title>并行计算——MPI（三） | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -288,13 +285,13 @@ MPI">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        并行计算——MPI(一)
+                        并行计算——MPI（三）
                     </div>
                 </div>
             </div>
@@ -433,7 +430,7 @@ MPI">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-19
+                    2020-04-15
                 </div>
 
                 
@@ -449,49 +446,144 @@ MPI">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>并行计算相关go on~<br>排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。</p>
-<p>好了言归正传，这是一篇学习MPI的相关笔记。</p>
-<h3 id="MPI基础"><a href="#MPI基础" class="headerlink" title="MPI基础"></a>MPI基础</h3><ul>
-<li>MPI是一个库，而不是一门语言。</li>
-<li>MPI是一种标准或规范的代表，而不特指某一个对它的具体实现。</li>
-<li>MPI是一种消息传递的编程模型，并成为这种编程模型的代表和事实上的标准</li>
+                <h2 id="高级并行程序设计"><a href="#高级并行程序设计" class="headerlink" title="高级并行程序设计"></a>高级并行程序设计</h2><h3 id="具有不连续数据发送的程序设计"><a href="#具有不连续数据发送的程序设计" class="headerlink" title="具有不连续数据发送的程序设计"></a>具有不连续数据发送的程序设计</h3><p>MPI除了可以发送或接收连续的数据之外，还可以处理不连续的数据，其基本方法有两种：一是允许用户自定义新的数据类型，又称派生数据类型；二是数据的打包与解包，即在发送方将不连续的数据打包到连续的区域，然后发送出去，在接收方将打包后的连续数据解包到不连续的存储空间 。</p>
+<h4 id="派生数据类型"><a href="#派生数据类型" class="headerlink" title="派生数据类型"></a>派生数据类型</h4><p>为了介绍派生数据类型，首先介绍一种通用的数据类型描述方法–类型图，使用类型图可以用比较精确和形式化的方法来描述各种各样的类型。类型图是一系列二元组的集合，两个数据类型是否相同取决于它们的类型图是否相同。类型图的二元组为如下形式 </p>
+<p>​                                                                        <strong>&lt;基类型 偏移&gt;</strong> </p>
+<p>则类型图为 </p>
+<p>类型图={&lt;基类型0 偏移0&gt;,&lt;基类型1 偏移1&gt;,…,&lt;基类型n-1 偏移n-1&gt;}</p>
+<p><img src="/2020/04/15/并行计算——MPI（三）/01.png" alt="类型图"></p>
+<p>基类型指出了该类型图中包括哪些基本的数据类型 而偏移则指出该基类型在整个类型 图中的起始位置 。</p>
+<h4 id="新数据类型的定义"><a href="#新数据类型的定义" class="headerlink" title="新数据类型的定义"></a>新数据类型的定义</h4><h5 id="连续复制类型的生成"><a href="#连续复制类型的生成" class="headerlink" title="连续复制类型的生成"></a>连续复制类型的生成</h5><ul>
+<li><p><strong>MPI_TYPE_CONTIGUOUS(count,oldtype,newtype)</strong></p>
+<p>IN count     复制个数(非负整数)     </p>
+<p>IN oldtype   旧数据类型(句柄)     </p>
+<p>OUT newtype 新数据类型(句柄)</p>
+</li>
 </ul>
-<h4 id="MPI的六个基本接口"><a href="#MPI的六个基本接口" class="headerlink" title="MPI的六个基本接口"></a>MPI的六个基本接口</h4><h5 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h5><p><strong>MPI_INIT()</strong>:<br>一个MPI程序的第一个调用必须是初始化接口的调用。它完成MPI程序的所以初始化工作.<br>c语言中的定义：</p>
-<pre><code>int MPI_Init(int *argc, char ***argv)</code></pre><h5 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h5><p><strong>MPI_FINALIZE()</strong>：一个MPI程序的最后一个调用，它结束MPI程序的运行，必须是最后一条可执行语句，否则程序的运行结果是不可预知的。<br>c语言中的定义：</p>
-<pre><code>int MPI_Finalize(void)</code></pre><h5 id="当前标识进程"><a href="#当前标识进程" class="headerlink" title="当前标识进程"></a>当前标识进程</h5><p><strong>MPI_COMM_RANK(comm,rank)</strong>:<br>comm: 输入, 该进程所在的通信域<br>rank: 输出， 调用进程在comm中的标识号<br>这一调用返回调用进程在给定通信域中的进程标识号，获得这个标识号，不同的进程就可以将自身和其他的进程区别开来，实现各进程的并行和协作。<br>c语言中的定义：</p>
-<pre><code>int MPI_Comm_rank(MPI_Comm comm, int *rank)</code></pre><h5 id="通信域包含的进程数"><a href="#通信域包含的进程数" class="headerlink" title="通信域包含的进程数"></a>通信域包含的进程数</h5><p><strong>MPI_COMM_SIZE(comm,size)</strong>:<br>comm: 输入，通信域<br>size：输出，通信域comm中包括的进程数（整数）<br>这一调用返回给定的通信域中所包括的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在执行并行。<br>c语言中的定义： </p>
-<pre><code>int MPI_Comm_size(MPI_Comm comm,int *size)</code></pre><h5 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h5><p><strong>MPI_SEND(buf,count,datatype,dest,comm)</strong>:<br>buf:          输入，发送缓冲区的起始地址<br>count：        输入，将发送的数据的个数（非负整数）<br>datatype：     输入，发送数据的数据类型<br>dest：        输入，目的进程的标识号<br>tag：        输入，该发送消息的消息标识（整型）<br>comm：        输入，通信域</p>
-<p>该接口将发送缓冲区中的count个datatype数据类型的数据发送到目的进程，目的进程在通信域中的标识号是dest，本次发送的消息标志是tag。使用标志可以把本次发送和本进程向同一目的进程发送的其他消息区别开来。<br>c语言中的定义：</p>
-<pre><code>int MPI_Send(void* buf,int count, MPI_Datatype datatype, int dest,int tag,MPI_Comm comm)</code></pre><h5 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h5><p><strong>MPI_RECV(buf, count, datatype, source,tag,comm,status)</strong>:<br>buf: 输出， 接收数据的缓冲区的起始地址<br>count： 输入，最多可接收的数据的个数<br>datatype： 输入，接收数据的数据类型<br>source： 输入，接收数据的来源，即发送数据的进程的进程标识号<br>tag： 输入，消息标识，与相应的发送操作的tag相匹配的标识<br>comm： 输入，本进程和发送进程所在的通信域<br>status： 输出，返回状态。返回状态变量，status是MPI定义的一个数据类型。在c实现中，状态变量是由至少三个域组成的结构类型，通过调用status.MPI_SOURCE,status.MPI_TAG,status.MPI_ERROR，就可以得到返回状态中所包含的发送数据进程的标识，发送数据的tag标识，本接收操作返回的错误代码。</p>
-<p>c语言中的定义：</p>
-<pre><code>int MPI_Recv(void* buf, int count, MPI_Datatype datatype, int source, int tag,MPI_Comm comm, MPI_Status *status)</code></pre><p>MPI_RECV从指定的进程source接收消息，并且该消息的数据类型和消息标识和本接收进程指定的 datatype和tag相一致。<br>接收到的消息所包含的数据元素的个数最多不能超过count。接收到消息的长度必须小于或等于接收缓冲区的长度，这是因为如果接收到的数据过大 MPI没有截断，接收缓冲区会发生溢出错误。count可以是零，这种情况下消息的数据部是空的。<br>其中datatype数据类型可以是MPI的预定义类型，也可以是用户自定义的类型，通过指定不同的数据类型调用MPI_RECV，可以接收不同类型的数据。</p>
-<h4 id="MPI预定义数据类型"><a href="#MPI预定义数据类型" class="headerlink" title="MPI预定义数据类型"></a>MPI预定义数据类型</h4><p><img src="/2020/03/19/并行计算——MPI-一/IMG_0478(20200319-201337).PNG" alt="数据类型"></p>
-<h4 id="MPI消息"><a href="#MPI消息" class="headerlink" title="MPI消息"></a>MPI消息</h4><p>MPI消息的组成：<br>           数据：&lt;起始地址，数据个数， 数据类型&gt;<br>           信封：&lt;源/目的地，标识， 通信域&gt;</p>
-<p>任意源： <strong>MPI_ANY_SOURCE</strong>,接收者可以用这个值表示任何进程发送的消息都可以接收，但其他要求还必须满足tag的匹配。<br>任意标识：<strong>MPI_ANY_TAG</strong>,该值表示接收者可以接收任意tag的标识值。<br>MPI允许一个进程可以给自己发送一个消息，但是这种操作要注意死锁的产生。</p>
-<h4 id="MPI通信域"><a href="#MPI通信域" class="headerlink" title="MPI通信域"></a>MPI通信域</h4><p>MPI通信域包括两部分： 进程组和通信上下文。进程的编号为0-N-1；通信上下文提供一个相对独立的通信域。<br>一个预定义的通信域MPI_COMM_WORLD由MPI提供。MPI初始化后就会产生这一描述，包括可以获得的全部进程。<br>MPI允许在原有的通信域的基础上，定义新的通信域。通信域为库和通信模式提供一种重要的封装机制。允许各模式由自己的独立通信域和自己的进程计数方案。</p>
-<h3 id="MPI通信模式"><a href="#MPI通信模式" class="headerlink" title="MPI通信模式"></a>MPI通信模式</h3><br>
-MPI共有四种通信模式，这几种通信模式对应于不同的通信需求。可以根据几种情况来区分：1 是否需要对发送的数据进行缓存？2 是否只有当接收调用执行后才可以执行发送操作？3 什么时候发送调用可以正确返回？等
-
-<p><img src="/2020/03/19/并行计算——MPI-一/2.PNG" alt="通信模式"></p>
-<h4 id="标准通信模式"><a href="#标准通信模式" class="headerlink" title="标准通信模式"></a>标准通信模式</h4><br>
-在MPI采用标准通信模式时，是否对发送的数据进行缓存由MPI自身决定。
-如果MPI缓存将要发送的数据，发送操作可以正确返回而对接收操作没有任何要求。
-由于缓存数据会延长通信时间，且缓冲区并不一定可以得到，这时MPI可以决定不缓存数据，这样只有当相应的接收调用被执行后，并且发送数据完全到达接收区后，发送才算完成。
-
-<h4 id="缓存通信模式"><a href="#缓存通信模式" class="headerlink" title="缓存通信模式"></a>缓存通信模式</h4><p>缓存通信发送数据函数：</p>
-<pre><code>int MPI_Bsend(void* buf,int count, MPI_Datatype datatype, int dest,int tag,MPI_Comm comm)</code></pre><p>该函数与MPI_Send的不同之处仅表现在通信时是使用标准的系统提供的缓冲区还是用户自己提供的缓冲区。缓存通信模式不管接收操作是否启动，发送操作都可以执行。<strong>用户必须保证发送消息之前有缓冲区可用。</strong><br>采用缓存通信模式，消息发送能否进行及能否正确返回完全依赖于是否有足够的通信域可以用。缓冲区只有当其中的消息发送出去后才可以重用或者释放。<br><br><strong>MPI_BUFFER_ATTACH(buffer，size)</strong>：<br>buffer： 输入，初始缓存地址<br>size:   输入，按字节计数的缓存跨度</p>
-<pre><code>int MPI_Buffer_attach(void *buffer, int size)</code></pre><p>该函数将大小为size的缓冲区递交给MPI。<br><br><strong>MPI_BUFFER_DETACH(buffer,size)</strong>:<br>buffer: 输出，缓冲区的初始地址<br>size： 输出，以字节为单位的缓冲区大小</p>
-<pre><code>int MPI_Buffer_detach(void **buffer, int size)</code></pre><p>该函数将提交大小为size的缓冲区buffer收回。阻塞调用，函数将等到使用该缓存的消息发送完毕后才返回。这一调用返回后用户可以重新使用该缓冲区或者将这一缓冲区释放。</p>
-<h4 id="同步通信模式"><a href="#同步通信模式" class="headerlink" title="同步通信模式"></a>同步通信模式</h4><p><strong>MPI_SSEND(buf,count,datatype,dest,tag,comm)</strong></p>
-<p>同步通信模式的开始不依赖于接收进程相应的接收操作是否启动，但是同步发送却必须等到相应的接收进程开始后才可以正确返回。    </p>
-<p>用于测试消息中数据个数的函数:</p>
-<pre><code>int MPI_Get_count(MPI_Status *status,MPI_datatype datatype, int *count)</code></pre><h4 id="就绪通信模式"><a href="#就绪通信模式" class="headerlink" title="就绪通信模式"></a>就绪通信模式</h4><p><strong>MPI_RSEND(buf,count,datatype,dest,tag,comm)</strong><br>在就绪通信模式中，只有当接收操作已经启动时，才可以在发送进程启动发送操作，否则发送操作将出错。对于非阻塞发送操作的正确返回，并不意味着发送已经完成，但对于阻塞发送的正确返回，则发送缓冲区可以重复使用。</p>
-<h3 id="阻塞通信"><a href="#阻塞通信" class="headerlink" title="阻塞通信"></a>阻塞通信</h3><p>当一个阻塞通信正确返回后，</p>
+<p>它得到的新类型是将一个已有的数据类型按顺序依次连续进行复制后的结果。</p>
+<pre><code>int MPI_Type_contiguous(int count,MPI_Datatype oldtype, MPI_Datatype *newtype) </code></pre><h5 id="向量数据的生成类型"><a href="#向量数据的生成类型" class="headerlink" title="向量数据的生成类型"></a>向量数据的生成类型</h5><ul>
+<li><p>*<em>MPI_TYPE_VECTOR(count,blocklength,stride,oldtype,newtype) *</em></p>
+<p>IN count         块的数量(非负整数)     </p>
+<p>IN blocklength    每个块中所含元素个数(非负整数)     </p>
+<p>IN stride         各块第一个元素之间相隔的元素个数(整数)     </p>
+<p>IN oldtype       旧数据类型(句柄)     </p>
+<p>OUT newtypr     新数据类型(句柄) </p>
+</li>
+</ul>
+<p>MPI_TYPE_VECTOR是一个更通用的生成器，允许复制一个数据类型到含有相等大小块的空间，每个块通过连接相同数量的旧数据类型的拷贝来获得，块与块之间的空间是旧数据类型的extent的倍数。</p>
 <ul>
-<li>该调用要求的通信操作已正确完成 即消息已成功发出或成功接收 </li>
-<li>该调用的缓冲区可用 若是发送操作，则该缓冲区可以被其它的操作更新。若是接收操作，该缓冲区中的数据已经完整，可以被正确引用。</li>
+<li><strong>MPI_TYPE_HVECTOR(count,blocklength,stride,oldtype,newtype)</strong></li>
 </ul>
-<p><strong>在阻塞通信中，对于接收进程 在接收消息时，除了要求接收到的消息的消息信封和接收操作自身的消息信封相一致外，还要求它接收到的消息是最早发送给自己的消息。</strong></p>
+<p>函数MPI_TYPE_HVECTOR和MPI_TYPE_VECTOR基本相同,只是stride不再是元素个数, 而是字节数 。</p>
+<h5 id="索引数据类型的生成"><a href="#索引数据类型的生成" class="headerlink" title="索引数据类型的生成"></a>索引数据类型的生成</h5><ul>
+<li><p>*<em>MPI_TYPE_INDEXED(count,array_of_blocklengths,array_of_displacemets,oldtype,newtype) *</em></p>
+<p>IN count                块的数量 整型     </p>
+<p>IN array_of_blocklengths  每个块中所含元素个数(非负整数数组)     </p>
+<p>IN array_of_displacements 各块偏移值 (整数数组)     </p>
+<p>IN oldtype               旧数据类型(句柄)     </p>
+<p>OUT newtypr            新数据类型(句柄) </p>
+</li>
+</ul>
+<p>MPI_TYPE_INDEXED允许复制一个旧数据类型到一个块序列中(每个块是旧数据类型的一个连接),每个块可以包含不同的拷贝数目和具有不同的偏移.所有的块偏移都是旧数据类型 extent的倍数.</p>
+<ul>
+<li>*<em>MPI_TYPE_HINDEXED(count,array_of_blocklengths,array_of_displacemets,oldtype,newtype) *</em></li>
+</ul>
+<p>函数MPI_TYPE_HINDEXED和MPI_TYPE_INDEXED基本相同,只是array_of_displacements中 的块偏移不再是旧数据类型extent的倍数,而是字节数.</p>
+<h5 id="结构数据类型的生成"><a href="#结构数据类型的生成" class="headerlink" title="结构数据类型的生成"></a>结构数据类型的生成</h5><ul>
+<li><p><strong>MPI_TYPE_STRUCT(count,array_of_blocklengths,array_of_displacemets,array_of_types,  newtype)</strong></p>
+<p>IN count                块的数量 (整数)     </p>
+<p>IN array_of_blocklengths  每个块中所含元素个数(整数数组)     </p>
+<p>IN array_of_displacements 各块偏移字节数(整数数组)     </p>
+<p>IN array_of_types        每个块中元素的类型(句柄数组)     </p>
+<p>OUT newtypr            新数据类型(句柄) </p>
+</li>
+</ul>
+<pre><code>int MPI_Type_struct(int count,int *array_of_blocklengths, MPI_Aint *array_of_displacements, MPI_Datatype array_of_types , MPI_Datatype *newtype) </code></pre><h5 id="新类型的递交和释放"><a href="#新类型的递交和释放" class="headerlink" title="新类型的递交和释放"></a>新类型的递交和释放</h5><p>新定义的数据类型在使用之前必须先递交给MPI系统，一个递交后的数据类型可以作为一个基本类型用在数据类型生成器中产生新的数据类型，预定义数据类型不需要递交就可以直接使用。递交操作用于递交新定义的数据类型 注意这里的参数是<u>指向该类型的指针或句柄</u>，而不是定义该类型的缓冲区的内容。</p>
+<ul>
+<li><p><strong>MPI_TYPE_COMMIT(datatype)</strong></p>
+<p>INOUT datatype 递交的数据类型(句柄)</p>
+</li>
+<li><p><strong>MPI_TYPE_FREE(datatype)</strong></p>
+</li>
+</ul>
+<p>MPI_TYPE_FREE调用将以前已递交的数据类型释放,并且设该数据类型指针或句柄为空MPI_DATATYPE_NULL。 由该派生类型定义的新派生类型不受当前派生类型释放的影响。</p>
+<h4 id="地址函数"><a href="#地址函数" class="headerlink" title="地址函数"></a>地址函数</h4><ul>
+<li><p><strong>MPI_ADDRESS(location,address)</strong></p>
+<p>IN location      内存地址(可选数据类型)     </p>
+<p>OUT address    相对于位置MPI_BOTTOM的偏移(整型)</p>
+</li>
+</ul>
+<p>一个MPI提供的地址调用MPI_ADDRESS可以返回某一个变量在内存中相对于预定义的地址MPI_BOTTOM的偏移地址。</p>
+<pre><code>int MPI_ADdress(void* location, MPI_Aint *address)</code></pre><h4 id="与新数据有关的调用"><a href="#与新数据有关的调用" class="headerlink" title="与新数据有关的调用"></a>与新数据有关的调用</h4><ul>
+<li><p><strong>MPI_TYPE_EXTENT(datatype,extent)</strong></p>
+<p>IN datatype    数据类型(句柄)     </p>
+<p>OUT extent    数据类型extent(整型)</p>
+</li>
+</ul>
+<p>MPI_TYPE_EXTENT以字节为单位返回一个数据类型的跨度extent。</p>
+<pre><code>int MPI_Type_extent(MPI_Datatype datatype, int *extent)</code></pre><ul>
+<li><p><strong>MPI_TYPE_SIZE(datatype,size)</strong></p>
+<p>IN datatype   数据类型(句柄)     </p>
+<p>OUT size     数据类型大小(整型) </p>
+</li>
+</ul>
+<p>MPI_TYPE_SIZE以字节为单位，返回给定数据类型有用部分所占空间的大小，即跨度减去类型中的空隙后的空间大小。和MPI_TYPE_EXTENT相比，MPI_TYPE_SIZE不包括由于对齐等原因导致数据类型中的空隙所占的空间。</p>
+<pre><code>int MPI_Type_size(MPI_Datatype datatype, int *size)</code></pre><hr>
+<ul>
+<li><p><strong>MPI_GET_ELEMENTS status, datatype, count )</strong></p>
+<p>IN status    接收操作返回的状态(状态类型)     </p>
+<p>IN datatype  接收操作使用的数据类型(句柄)     </p>
+<p>OUT count  接收到的基本元素个数(整型) </p>
+</li>
+<li><p><strong>MPI_GET_COUNT(status, datatype,count)</strong></p>
+</li>
+</ul>
+<p>以接收操作完成后返回的状态status为参数 ，MPI_CET_COUNT返回的是以指定的数据类型为单位 接收操作接收到的数据的个数；而MPI_GET_ELEMENTS返回的则是以基本的类型为单位的数据的个数，MPI_GET_COUNT 和MPI_GET_ELEMENT对基本数据类型使用时返回值相同。</p>
+<pre><code>int MPI_Get_count(MPI_Status * status, MPI_Datatype datatype, int * count)</code></pre><hr>
+<ul>
+<li><p><strong>MPI_TYPE_LB(datatype,displacement)</strong></p>
+<p>IN datatype       数据类型(句柄)     </p>
+<p>OUT displacement 下界的偏移(整数)</p>
+</li>
+<li><p><strong>MPI_TYPE_UB(datatype,displacement)</strong></p>
+</li>
+</ul>
+<p>MPI提供两个特殊的数据类型，称为伪数据类型上界标记类型MPI_UB和下界标记类型MPI_LB。这两个数据类型不占空间即extent(MPI_LB)= extent(MPI_UB) =0) 他们主要是用来影响数据类型的跨度，从而对派生数据类型产生影响 。</p>
+<h4 id="打包与解包"><a href="#打包与解包" class="headerlink" title="打包与解包"></a>打包与解包</h4><p>打包(Pack)和解包(Unpack)操作是为了发送不连续的数据，在发送前显式地把数据包装到一个连续的缓冲区，在接收之后从连续缓冲区中解包。</p>
+<ul>
+<li><p><strong>MPI_PACK(inbuf, incount, datatype, outbuf, outcount, position, comm )</strong></p>
+<p>IN inbuf       输入缓冲区起始地址(可选数据类型)     </p>
+<p>IN incount     输入数据项个数(整型)     </p>
+<p>IN datatype    每个输入数据项的类型(句柄)     </p>
+<p>OUT outbuf    输出缓冲区开始地址(可选数据类型)     </p>
+<p>IN outcount    输出缓冲区大小(整型)     </p>
+<p>INOUT position 缓冲区当前位置(整型)     </p>
+<p>IN comm       通信域(句柄) </p>
+<p>输入缓冲区可以是MPI_SEND允许的任何通信缓冲区。入口参数position的值是输出缓冲区中用于打包的起始地址 ，打包后它的值根据打包消息的大小来增加。出口参数position的值是被打包的消息占用的输出缓冲区后面的第一个地址，通过连续几次对不同位置的消息调用打包操作，就将不连续的消息放到了一个连续的空间。comm参数是将在后面用于发送打包的消息时用的通信域。</p>
+<p>  int MPI_Pack(void* inbuf, int incount, MPI_datatype, void *outbuf, int outcount, int *position, MPI_Comm comm)</p>
+</li>
+<li><p><strong>MPI_UNPACK(inbuf, insize, position, outbuf, outcount, datatype, comm )</strong></p>
+<p>IN inbuf 输入缓冲区起始(选择)     </p>
+<p>IN insize 输入数据项数目(整型)     </p>
+<p>INOUT position 缓冲区当前位置, 字节(整型)     </p>
+<p>OUT outbuf 输出缓冲区开始(选择)     </p>
+<p>IN outcount 输出缓冲区大小, 字节(整型)     </p>
+<p>IN datatype 每个输入数据项的类型(句柄)     </p>
+<p>IN comm 打包的消息的通信域(句柄) </p>
+</li>
+</ul>
+<pre><code>int MPI_Unpack(void* inbuf, int insize, int *position, void *outbuf, int outcount, MPI_Datatype datatype, MPI_Comm comm)</code></pre><p> 通过连续几次对已打包的消息调用与打包时相应的解包操作，就可以将连续的消息解开放到一个不连续的空间 comm参数是用于接收消息的通信域。</p>
+<p><u>MPI_RECV和MPI_UNPACK的区别:</u> 在MPI_RECV中,count参数指明的是可以接收的最大项数,实际接收的项数是由接收的消息的长度来决定的。在MPI_UNPACK中,count参数指明实际解包的项数，相应消息的大小是参数position的减少值。</p>
+<p>用MPI_PACKED发送的数据可以用任意数据类型来接收，只要它和实际接收到的消息的数据类型相匹配。以任何类型发送的消息(包括MPI_PACKED类型)都可以用MPI_PACKED类型接收，这样的消息于是就可以被调用MPI_UNPACK来解包 。</p>
+<ul>
+<li><p><strong>MPI_PACK_SIZE( incount, datatype, comm, size )</strong></p>
+<p>IN incount    指定数据类型的个数(整型)     </p>
+<p>IN datatype   数据类型(句柄)     </p>
+<p>IN comm     通信域(句柄)     </p>
+<p>OUT size     以字节为单位 ，incount个datatype数据类型需要的空间(整型) </p>
+</li>
+</ul>
+<p>MPI_PACK_SIZE调用的返回值是size，表示incount个datatype数据类型需要的空间的大小。该调用返回的是上界 ，而不是一个精确界。这是因为包装一个消息所需要的精确空间可能依赖于上下文。</p>
 
             </div>
             <hr/>
@@ -650,9 +742,9 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《并行计算——MPI(一)》
+                    《并行计算——MPI（三）》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/19/并行计算——MPI-一/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/15/并行计算——MPI（三）/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -692,30 +784,30 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/04/01/并行计算-MPI（二）/">
+                <a href="/2020/04/15/并行计算——MPI（三）/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="并行计算--MPI（二）">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="并行计算——MPI（三）">
                         
-                        <span class="card-title">并行计算--MPI（二）</span>
+                        <span class="card-title">并行计算——MPI（三）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            高级MPI并行程序设计这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。
-非阻塞通信的MPI程序设计非阻塞通信主要用于实现计算与通信的重叠。所有阻塞通信的
+                            高级并行程序设计具有不连续数据发送的程序设计MPI除了可以发送或接收连续的数据之外，还可以处理不连续的数据，其基本方法有两种：一是允许用户自定义新的数据类型，又称派生数据类型；二是数据的打包与解包，即在发送方将不连续的数据打包到连续的区域，
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -728,6 +820,7 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -750,38 +843,32 @@ MPI共有四种通信模式，这几种通信模式对应于不同的通信需�
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/05/Web前端——HTML学习笔记/">
+                <a href="/2020/04/01/并行计算-MPI（二）/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Web前端—HTML学习笔记">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="并行计算--MPI（二）">
                         
-                        <span class="card-title">Web前端—HTML学习笔记</span>
+                        <span class="card-title">并行计算--MPI（二）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            HTML简介
-Web上的通用标记语言
-书写Web文档的一套语法规范
-用HTML语言写成的文件称为网页或页面
-是一种解释型语言
-由Web浏览器解释执行
-
-HTML5文档结构12345678910&lt;!DOCTYPE html&gt;   
+                            高级MPI并行程序设计这一部分为了提高MPI程序的性能、通用性、移植性等而引入的MPI高级特性，包括非阻塞通信、组通信、不连续的数据的传送以及虚拟进程拓扑等。
+非阻塞通信的MPI程序设计非阻塞通信主要用于实现计算与通信的重叠。所有阻塞通信的
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/前端/" class="post-category" target="_blank">
-                                    前端
+                            <a href="/categories/并行计算/" class="post-category" target="_blank">
+                                    并行计算
                                 </a>
                             
                             
@@ -791,8 +878,12 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/HTML/" target="_blank">
-                        <span class="chip bg-color">HTML</span>
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
+                    </a>
+                    
+                    <a href="/tags/并行计算/" target="_blank">
+                        <span class="chip bg-color">并行计算</span>
                     </a>
                     
                 </div>
