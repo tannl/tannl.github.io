@@ -437,7 +437,16 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>N-Body问题又称为N体问题或多体问题，N表示任意正整数，研究N个质点相互之间作用的运动规律。在物理学和天文学中，<strong>N体模拟</strong>是通常在物理力（例如重力）的影响下对粒子<a href="https://en.wikipedia.org/wiki/Dynamical_system" target="_blank" rel="noopener">动力学系统</a>的模拟（请参见<a href="https://en.wikipedia.org/wiki/N-body_problem" target="_blank" rel="noopener"><em>n</em></a><a href="https://en.wikipedia.org/wiki/N-body_problem" target="_blank" rel="noopener">体问题</a>）。<em>N</em>体模拟是天体物理学中广泛使用的工具，从研究诸如地球 - 月 - 太阳系统之类的少数体系统的动力学到了解<a href="https://en.wikipedia.org/wiki/Large-scale_structure_of_the_universe" target="_blank" rel="noopener">宇宙大尺度结构</a>的演化。</p>
+                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>N-Body问题又称为N体问题或多体问题，N表示任意正整数，研究N个质点相互之间作用的运动规律。在物理学和天文学中，<strong>N体模拟</strong>是通常在物理力（例如重力）的影响下对粒子<a href="https://en.wikipedia.org/wiki/Dynamical_system" target="_blank" rel="noopener">动力学系统</a>的模拟（请参见<a href="https://en.wikipedia.org/wiki/N-body_problem" target="_blank" rel="noopener"><em>n</em></a><a href="https://en.wikipedia.org/wiki/N-body_problem" target="_blank" rel="noopener">体问题</a>）。<em>N</em>体模拟是天体物理学中广泛使用的工具，从研究诸如地球 - 月 - 太阳系统之类的少数体系统的动力学到了解<a href="https://en.wikipedia.org/wiki/Large-scale_structure_of_the_universe" target="_blank" rel="noopener">宇宙大尺度结构</a>的演化。在N-body系统中，每个粒子体都会与剩下的其他粒子产生交互作用（交互作用因具体问题而异），从而产生相应的物理现象。对于大量的粒子，计算过程花费巨大，从而可以利用计算算法优化和高性能的并行计算来减少计算时间。</p>
+<h4 id="All-Pairs法"><a href="#All-Pairs法" class="headerlink" title="All-Pairs法"></a>All-Pairs法</h4><p>这是一种最简单的暴力求解的方法，它直接计算每一个粒子体与剩下的所有粒子体的相互作用，算法复杂度为O(n^2).</p>
+<p>天体星系模拟主要考虑的是万有引力。根据万有引力定律计算每个粒子与其他粒子的作用力，计算出所有粒子的相互作用力后，即可计算加速度以及更新后的位置。（考虑方向矢量）。</p>
+<p>代码实现天体模拟的计算并不复杂，最重要的是如何优化计算。</p>
+<p>一种MPI+Openmp结合的并行优化方法：</p>
+<ul>
+<li>MPI控制进程，每个进程平均分配粒子进行计算</li>
+<li>openmp并行处理计算集中部分</li>
+</ul>
+<p><strong>我的代码</strong>: <a href="https://github.com/tannl/Parallel-Computing" target="_blank" rel="noopener">戳这里</a></p>
 
             </div>
             <hr/>
@@ -727,12 +736,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
-                    </a>
-                    
                     <a href="/tags/并行计算/" target="_blank">
                         <span class="chip bg-color">并行计算</span>
+                    </a>
+                    
+                    <a href="/tags/MPI/" target="_blank">
+                        <span class="chip bg-color">MPI</span>
                     </a>
                     
                 </div>
