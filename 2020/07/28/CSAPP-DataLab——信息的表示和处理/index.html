@@ -452,7 +452,7 @@
 <p>确认主机为64位架构的内核，应该输出为adm64，执行：</p>
 <pre><code>dpkg --print-architecture</code></pre><p> 确认打开了多架构支持功能，应该输出为i386，执行：</p>
 <pre><code>dpkg --print-foreign-architectures</code></pre><p>安装gcc multilab，执行：</p>
-<pre><code>sudo apt-get install </code></pre><h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>要求：</p>
+<pre><code>sudo apt-get install gcc-multilib g++-multilib  </code></pre><h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>要求：</p>
 <p>/* bitAnd - x&amp;y using only ~ and | </p>
 <p>Example: bitAnd(6, 5) = 4</p>
 <p>Legal ops: ~ |</p>
