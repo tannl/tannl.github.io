@@ -17,7 +17,7 @@ MPI">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>并行计算——MPI(一) | Tannl&#39;s Blog</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/jpeg" href="/avatar.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -31,7 +31,7 @@ MPI">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -42,7 +42,7 @@ MPI">
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/medias/avatar.jpg" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">Tannl's Blog</span>
                 </a>
@@ -129,7 +129,7 @@ MPI">
 
     <div class="mobile-head bg-color">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/medias/avatar.jpg" class="logo-img circle responsive-img">
         
         <div class="logo-name">Tannl's Blog</div>
         <div class="logo-desc">
@@ -212,7 +212,7 @@ MPI">
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/tannl" class="waves-effect waves-light" target="_blank">
                 <i class="fa fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -269,7 +269,7 @@ MPI">
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/tannl" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -458,9 +458,9 @@ MPI">
 </ul>
 <h4 id="MPI的六个基本接口"><a href="#MPI的六个基本接口" class="headerlink" title="MPI的六个基本接口"></a>MPI的六个基本接口</h4><h5 id="MPI初始化"><a href="#MPI初始化" class="headerlink" title="MPI初始化"></a>MPI初始化</h5><p><strong>MPI_INIT()</strong>:<br>一个MPI程序的第一个调用必须是初始化接口的调用。它完成MPI程序的所以初始化工作.<br>c语言中的定义：</p>
 <pre><code>int MPI_Init(int *argc, char ***argv)</code></pre><h5 id="MPI结束"><a href="#MPI结束" class="headerlink" title="MPI结束"></a>MPI结束</h5><p><strong>MPI_FINALIZE()</strong>：一个MPI程序的最后一个调用，它结束MPI程序的运行，必须是最后一条可执行语句，否则程序的运行结果是不可预知的。<br>c语言中的定义：</p>
-<pre><code>int MPI_Finalize(void)</code></pre><h5 id="当前标识进程"><a href="#当前标识进程" class="headerlink" title="当前标识进程"></a>当前标识进程</h5><p><strong>MPI_COMM_RANK(comm,rank)</strong>:<br>comm: 输入, 该进程所在的通信域<br>rank: 输出， 调用进程在comm中的标识号<br>这一调用返回调用进程在给定通信域中的进程标识号，获得这个标识号，不同的进程就可以将自身和其他的进程区别开来，实现各进程的并行和协作。<br>c语言中的定义：</p>
-<pre><code>int MPI_Comm_rank(MPI_Comm comm, int *rank)</code></pre><h5 id="通信域包含的进程数"><a href="#通信域包含的进程数" class="headerlink" title="通信域包含的进程数"></a>通信域包含的进程数</h5><p><strong>MPI_COMM_SIZE(comm,size)</strong>:<br>comm: 输入，通信域<br>size：输出，通信域comm中包括的进程数（整数）<br>这一调用返回给定的通信域中所包括的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在执行并行。<br>c语言中的定义： </p>
-<pre><code>int MPI_Comm_size(MPI_Comm comm,int *size)</code></pre><h5 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h5><p><strong>MPI_SEND(buf,count,datatype,dest,comm)</strong>:<br>buf:          输入，发送缓冲区的起始地址<br>count：        输入，将发送的数据的个数（非负整数）<br>datatype：     输入，发送数据的数据类型<br>dest：        输入，目的进程的标识号<br>tag：        输入，该发送消息的消息标识（整型）<br>comm：        输入，通信域</p>
+<pre><code>    int MPI_Finalize(void)</code></pre><h5 id="当前标识进程"><a href="#当前标识进程" class="headerlink" title="当前标识进程"></a>当前标识进程</h5><p><strong>MPI_COMM_RANK(comm,rank)</strong>:<br>comm: 输入, 该进程所在的通信域<br>rank: 输出， 调用进程在comm中的标识号<br>这一调用返回调用进程在给定通信域中的进程标识号，获得这个标识号，不同的进程就可以将自身和其他的进程区别开来，实现各进程的并行和协作。<br>c语言中的定义：</p>
+<pre><code>    int MPI_Comm_rank(MPI_Comm comm, int *rank)</code></pre><h5 id="通信域包含的进程数"><a href="#通信域包含的进程数" class="headerlink" title="通信域包含的进程数"></a>通信域包含的进程数</h5><p><strong>MPI_COMM_SIZE(comm,size)</strong>:<br>comm: 输入，通信域<br>size：输出，通信域comm中包括的进程数（整数）<br>这一调用返回给定的通信域中所包括的进程的个数，不同的进程通过这一调用得知在给定的通信域中一共有多少个进程在执行并行。<br>c语言中的定义： </p>
+<pre><code>    int MPI_Comm_size(MPI_Comm comm,int *size)</code></pre><h5 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h5><p><strong>MPI_SEND(buf,count,datatype,dest,comm)</strong>:<br>buf:          输入，发送缓冲区的起始地址<br>count：        输入，将发送的数据的个数（非负整数）<br>datatype：     输入，发送数据的数据类型<br>dest：        输入，目的进程的标识号<br>tag：        输入，该发送消息的消息标识（整型）<br>comm：        输入，通信域</p>
 <p>该接口将发送缓冲区中的count个datatype数据类型的数据发送到目的进程，目的进程在通信域中的标识号是dest，本次发送的消息标志是tag。使用标志可以把本次发送和本进程向同一目的进程发送的其他消息区别开来。<br>c语言中的定义：</p>
 <pre><code>int MPI_Send(void* buf,int count, MPI_Datatype datatype, int dest,int tag,MPI_Comm comm)</code></pre><h5 id="消息接收"><a href="#消息接收" class="headerlink" title="消息接收"></a>消息接收</h5><p><strong>MPI_RECV(buf, count, datatype, source,tag,comm,status)</strong>:<br>buf: 输出， 接收数据的缓冲区的起始地址<br>count： 输入，最多可接收的数据的个数<br>datatype： 输入，接收数据的数据类型<br>source： 输入，接收数据的来源，即发送数据的进程的进程标识号<br>tag： 输入，消息标识，与相应的发送操作的tag相匹配的标识<br>comm： 输入，本进程和发送进程所在的通信域<br>status： 输出，返回状态。返回状态变量，status是MPI定义的一个数据类型。在c实现中，状态变量是由至少三个域组成的结构类型，通过调用status.MPI_SOURCE,status.MPI_TAG,status.MPI_ERROR，就可以得到返回状态中所包含的发送数据进程的标识，发送数据的tag标识，本接收操作返回的错误代码。</p>
 <p>c语言中的定义：</p>
@@ -769,7 +769,7 @@ Web上的通用标记语言
 是一种解释型语言
 由Web浏览器解释执行
 
-HTML5文档结构12345678910&lt;!DOCTYPE html&gt;   
+HTML5文档结构&lt;!DOCTYPE html&gt;   &lt;!--文档类型
                         
                     </div>
                     <div class="publish-info">
@@ -960,15 +960,6 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/tannl" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fa fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:619301791@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fa fa-envelope-open"></i>
-    </a>
 
 
 
@@ -976,15 +967,8 @@ HTML5文档结构12345678910&lt;!DOCTYPE html&gt;
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=619301791" class="tooltipped" data-tooltip="QQ联系我: 619301791" data-position="top" data-delay="50">
-        <i class="fa fa-qq"></i>
-    </a>
 
 
-
-    <a href="tannl" data-tooltip="关注我的微博: tannl" data-position="top" data-delay="50">
-        <i class="fa fa-weibo"></i>
-    </a>
 
 
 

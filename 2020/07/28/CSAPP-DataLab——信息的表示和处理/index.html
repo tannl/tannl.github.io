@@ -4,15 +4,10 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Web前端—HTML学习笔记, Tannl&#39;s Blog">
-    <meta name="description" content="HTML简介
-Web上的通用标记语言
-书写Web文档的一套语法规范
-用HTML语言写成的文件称为网页或页面
-是一种解释型语言
-由Web浏览器解释执行
-
-HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
+    <meta name="keywords" content="CSAPP DataLab——信息的表示和处理, Tannl&#39;s Blog">
+    <meta name="description" content="数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。
+开始之前测试环境就遇到了报错：
+错误: fatal error: bits/libc-head">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +15,7 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Web前端—HTML学习笔记 | Tannl&#39;s Blog</title>
+    <title>CSAPP DataLab——信息的表示和处理 | Tannl&#39;s Blog</title>
     <link rel="icon" type="image/jpeg" href="/avatar.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -292,13 +287,13 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Web前端—HTML学习笔记
+                        CSAPP DataLab——信息的表示和处理
                     </div>
                 </div>
             </div>
@@ -409,8 +404,8 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/HTML/" target="_blank">
-                                <span class="chip bg-color">HTML</span>
+                            <a href="/tags/CSAPP/" target="_blank">
+                                <span class="chip bg-color">CSAPP</span>
                             </a>
                         
                     </div>
@@ -421,8 +416,8 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/前端/" class="post-category" target="_blank">
-                                前端
+                            <a href="/categories/CSAPP/" class="post-category" target="_blank">
+                                CSAPP
                             </a>
                         
                     </div>
@@ -433,7 +428,7 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-05
+                    2020-07-28
                 </div>
 
                 
@@ -449,122 +444,21 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="HTML简介"><a href="#HTML简介" class="headerlink" title="HTML简介"></a>HTML简介</h3><ul>
-<li><strong>Web上的通用标记语言</strong></li>
-<li><strong>书写Web文档的一套语法规范</strong></li>
-<li><strong>用HTML语言写成的文件称为网页或页面</strong></li>
-<li><strong>是一种解释型语言</strong></li>
-<li><strong>由Web浏览器解释执行</strong></li>
-</ul>
-<h4 id="HTML5文档结构"><a href="#HTML5文档结构" class="headerlink" title="HTML5文档结构"></a>HTML5文档结构</h4><pre><code>&lt;!DOCTYPE html&gt;   &lt;!--文档类型声明，HTML5强制使用，必须在首行--&gt;
-&lt;html lang=&quot;en&quot;&gt;  
-&lt;head&gt;              &lt;!--头元素--&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;!--其他头内元素--&gt;
-    &lt;title&gt;Title&lt;/title&gt; &lt;!--页面标题--&gt;
-&lt;/head&gt;
-&lt;body&gt;   &lt;!--体元素--&gt;
-            &lt;!--页面主要内容区域--&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h4 id="标签解析"><a href="#标签解析" class="headerlink" title="标签解析"></a>标签解析</h4><p>根元素: <strong>&lt; html &gt; &lt; /html &gt;</strong>  定义了文档的开始和结束</p>
-<p>体元素：<strong>&lt; body &gt;</strong> <strong>&lt; /body &gt;</strong> 定义了文档的主体，包含了文档的所有内容</p>
-<p>头元素： <strong>&lt; head &gt; &lt; /head &gt;</strong> 定义了文档的头部，描述了文档的各种属性和信息，内容可以是脚本、样式表和提供的元素信息等。</p>
-<p><strong>&lt; title &gt;&lt; /title &gt;</strong>必须存在且包含在头元素中。</p>
-<h3 id="IIS简介"><a href="#IIS简介" class="headerlink" title="IIS简介"></a>IIS简介</h3><ul>
-<li>互联网信息服务</li>
-<li>由微软公司提供的基于运行Microsoft Windows的互联网基本服务</li>
-<li>是一种Web（网页）服务组件，包括<ul>
-<li>Web服务器–网页浏览</li>
-<li>FTP服务器–文件传输</li>
-<li>NNTP服务器–新闻服务</li>
-<li>SMTP服务器–邮件发送</li>
-</ul>
-</li>
-<li>配置网站成功后即可在本地进行管理</li>
-</ul>
-<h3 id="HTML常用属性标签"><a href="#HTML常用属性标签" class="headerlink" title="HTML常用属性标签"></a>HTML常用属性标签</h3><h4 id="常用全局属性"><a href="#常用全局属性" class="headerlink" title="常用全局属性"></a>常用全局属性</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-8.png" alt></p>
-<p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-21.png" alt></p>
-<h4 id="meta标签属性"><a href="#meta标签属性" class="headerlink" title="meta标签属性"></a>meta标签属性</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-22.png" alt></p>
-<h3 id="HTML标签解析"><a href="#HTML标签解析" class="headerlink" title="HTML标签解析"></a>HTML标签解析</h3><h4 id="列表标签"><a href="#列表标签" class="headerlink" title="列表标签"></a>列表标签</h4><p> //普通列表<br><strong>&lt; ol &gt;</strong>: 有序列表<br><strong>&lt; ul &gt;</strong>: 无序列表<br><strong>&lt; li &gt;</strong>: 列表项<br>// 解释型列表<br><strong>&lt; dl &gt;</strong>: 定义列表<br><strong>&lt; dt &gt;</strong>: 定义列表项<br><strong>&lt; dd &gt;</strong>: 定义列表项描述<br>代码示例：<br><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-12.png" alt><br>展示效果：</p>
-<ul>    我的早餐清单：    <li>        茶的种类        <ul>            <li>红茶</li>            <li>绿茶</li>        </ul>    </li>    <li>牛奶</li>    <li>面包</li></ul>我最喜欢做的事情：<ol>    <li>看书</li>    <li>旅游</li>    <li>游戏</li></ol>最不喜欢的事情：<ol start="5" reversed="reversed">    <li>做作业</li>    <li>背英语单词</li>    <li>考试</li></ol>
+                <h3 id="数据实验室"><a href="#数据实验室" class="headerlink" title="数据实验室"></a>数据实验室</h3><p>《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。</p>
+<p>开始之前测试环境就遇到了报错：</p>
+<p><strong>错误: fatal error: bits/libc-header-start.h: No such file or directory #include</strong></p>
+<p>环境： Ubuntu    <strong>（实验全部需要在32位环境下编译）</strong></p>
+<p>所以先确保可以在64位的Ubuntu上编译32位程序。</p>
+<p>确认主机为64位架构的内核，应该输出为adm64，执行：</p>
+<pre><code>dpkg --print-architecture</code></pre><p> 确认打开了多架构支持功能，应该输出为i386，执行：</p>
+<pre><code>dpkg --print-foreign-architectures</code></pre><p>安装gcc multilab，执行：</p>
+<pre><code>sudo apt-get install </code></pre><h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>要求：</p>
+<p>/* bitAnd - x&amp;y using only ~ and | </p>
+<p>Example: bitAnd(6, 5) = 4</p>
+<p>Legal ops: ~ |</p>
+<p>Max ops: 8</p>
+<p>Rating: 1   */</p>
 
-<h4 id="链接标签"><a href="#链接标签" class="headerlink" title="链接标签"></a>链接标签</h4><p><strong>&lt; a &gt;</strong>: (anchor)<br><br>链接目标可以是：另一个网页，同一个网页的不同位置，图片，邮件地址，文件，应用程序。</p>
-<p><strong>&lt; a &gt;</strong>标签的属性：</p>
-<ul>
-<li>href: 值为目标url</li>
-<li>target：值有：<ul>
-<li>_blank:在新窗口打开</li>
-<li>_self: 在本窗口打开</li>
-<li>_top：在顶部窗口打开</li>
-<li>帧名：在指定框架（帧）中打开</li>
-</ul>
-</li>
-<li>id： 在网页内部创建一个书签，Id值区分大小写</li>
-</ul>
-<p>id的使用：网页中的某个位置使用&lt; a id=”PageTop”&gt;&lt; /a &gt;<br>        另一个位置&lt; a href=”#PageTop”&gt;返回顶部<br>      此时点击这个链接将会返回id标签的位置。</p>
-<h4 id="页面结构标签"><a href="#页面结构标签" class="headerlink" title="页面结构标签"></a>页面结构标签</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-15.png" alt></p>
-<p>页面结构主要分为三个部分。header页面头部部分，中 页面主要内容区域，footer页面底部区域。&lt; div &gt;标签用来区分块。</p>
-<h4 id="常用字符实体"><a href="#常用字符实体" class="headerlink" title="常用字符实体"></a>常用字符实体</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-16.png" alt></p>
-<h4 id="基础格式标签"><a href="#基础格式标签" class="headerlink" title="基础格式标签"></a>基础格式标签</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-17.png" alt></p>
-<p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-18.png" alt></p>
-<h4 id="表格标签"><a href="#表格标签" class="headerlink" title="表格标签"></a>表格标签</h4><p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-19.png" alt><br>演示效果：<br><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-20.png" alt></p>
-<p><strong>&lt; table &gt;</strong>:<br><br>table标签中的值有：</p>
-<ul>
-<li>border：设置表格的边框线宽度</li>
-</ul>
-<ul>
-<li>cellpadding：单元格内容与边框的距离</li>
-<li>cellspacing：单元格之间的距离<br>table内部标签：</li>
-</ul>
-<ul>
-<li>&lt; tr &gt;: 行</li>
-<li>&lt; td &gt;: 列（表数据）<ul>
-<li>colspan：合并列（td中的值）</li>
-<li>rowspan：行并列</li>
-</ul>
-</li>
-<li>&lt; th &gt;: 表头（默认为加粗的表头）</li>
-</ul>
-<ul>
-<li>&lt; caption &gt;: 定义表格标题，必须紧跟table标签之后。</li>
-</ul>
-<h4 id="表单标签"><a href="#表单标签" class="headerlink" title="表单标签"></a>表单标签</h4><p>form标签：前后台信息交互的图形界面，允许用户输入的区域，页面上的表单的里面的信息会被提交到后台处理。<br>form属性值：</p>
-<ul>
-<li>method：提交表单的方式<ul>
-<li>get （明文传递）</li>
-<li>post（密文传递，更安全）</li>
-</ul>
-</li>
-<li>action：后台处理程序的路径，前台提交的表单交给该标签的url处理。</li>
-</ul>
-<p>form内部标签：</p>
-<p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-9.png" alt></p>
-<h5 id="input表单输入标签"><a href="#input表单输入标签" class="headerlink" title="input表单输入标签"></a>input表单输入标签</h5><pre><code>用户名 &lt;input type=&quot;text&quot; id=&quot;1&quot; name=&quot;1&quot; minlength=&quot;6&quot; maxlength=&quot;10&quot; 
-/ placeholder=&quot;请输入用户名&quot;&gt;&lt;/br&gt;</code></pre><p>input中type值：</p>
-<p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-10.png" alt></p>
-<p><img src="/2020/03/05/Web前端——HTML学习笔记/pasted-13.png" alt></p>
-<h3 id="tab快速生成代码"><a href="#tab快速生成代码" class="headerlink" title="tab快速生成代码"></a>tab快速生成代码</h3><p>① !/html：5 +&lt; tab &gt;:快速生成html基础结构<br>②标记名.class值+tab键： 生成&lt;标记名 class=”class值”&gt;<br>③标记名#ID值+tab： 生成&lt;标记名 id=”id值”&gt;<br>④标签名{内容}+tab<br>⑤标签名[属性名=“属性值”]:输入标签内容及属性<br>⑥<strong>&gt;:子元素符号表示嵌套</strong><br>示例：Table&gt;tr*2&gt;td*3<br>tab键生成：</p>
-<pre><code>&lt;Table&gt;
-   &lt;tr&gt;
-     &lt;td&gt;&lt;/td&gt;
-     &lt;td&gt;&lt;/td&gt;
-     &lt;td&gt;&lt;/td&gt;
-   &lt;/tr&gt;
-     &lt;tr&gt;
-     &lt;td&gt;&lt;/td&gt;
-     &lt;td&gt;&lt;/td&gt;
-     &lt;td&gt;&lt;/td&gt;
-   &lt;/tr&gt;
- &lt;/Table&gt;</code></pre><p> 示例（有数字递增）：ul&gt;li.item$*3<br> tab生成：</p>
-<pre><code>&lt;ul&gt;
-  &lt;li class=&quot;item1&quot;&gt;&lt;/li&gt;
-  &lt;li class=&quot;item2&quot;&gt;&lt;/li&gt;
-  &lt;li class=&quot;item3&quot;&gt;&lt;/li&gt;
-&lt;/ul&gt;</code></pre><p><strong>+：同级标签符号</strong><br> 示例：H1+h2<br> tab键生成：</p>
-<pre><code> &lt;h1&gt;&lt;/h1&gt;
- &lt;h2&gt;&lt;/h2&gt;</code></pre><p> <strong>^:该符号前的标签提升一行</strong><br> 示例：P&gt;span^p<br> tab生成：</p>
-<pre><code> &lt;P&gt;&lt;span&gt;&lt;/span&gt;&lt;/P&gt;
- &lt;p&gt;&lt;/p&gt;</code></pre>
             </div>
             <hr/>
 
@@ -722,9 +616,9 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Web前端—HTML学习笔记》
+                    《CSAPP DataLab——信息的表示和处理》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/05/Web前端——HTML学习笔记/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/07/28/CSAPP-DataLab——信息的表示和处理/" property="cc:attributionName"
                rel="cc:attributionURL">
                 tannl
             </a> 采用
@@ -764,53 +658,50 @@ HTML5文档结构&amp;lt;!DOCTYPE html&amp;gt;   &amp;lt;!--文档类型">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/03/19/并行计算——MPI-一/">
+                <a href="/2020/07/28/CSAPP-DataLab——信息的表示和处理/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="并行计算——MPI(一)">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="CSAPP DataLab——信息的表示和处理">
                         
-                        <span class="card-title">并行计算——MPI(一)</span>
+                        <span class="card-title">CSAPP DataLab——信息的表示和处理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            并行计算相关go on~排球少年好看到上头，学习效率都降低了呜呜呜，但是还是忍不住到处夸它，甚至想在博客里都给月岛排面呜呜呜。反正也没人看，我就要在这里夸月岛啊啊啊月月冲呀。
-好了言归正传，这是一篇学习MPI的相关笔记。
-MPI基础
-MPI
+                            数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。
+开始之前测试环境就遇到了报错：
+错误: fatal error: bits/libc-head
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/并行计算/" class="post-category" target="_blank">
-                                    并行计算
+                            <a href="/categories/CSAPP/" class="post-category" target="_blank">
+                                    CSAPP
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/并行计算/" target="_blank">
-                        <span class="chip bg-color">并行计算</span>
-                    </a>
-                    
-                    <a href="/tags/MPI/" target="_blank">
-                        <span class="chip bg-color">MPI</span>
+                    <a href="/tags/CSAPP/" target="_blank">
+                        <span class="chip bg-color">CSAPP</span>
                     </a>
                     
                 </div>
@@ -824,34 +715,29 @@ MPI
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/04/并行计算——OpenMP-一/">
+                <a href="/2020/04/23/多体N-body模型算法/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="并行计算—OpenMP（一）">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="多体N-body模型">
                         
-                        <span class="card-title">并行计算—OpenMP（一）</span>
+                        <span class="card-title">多体N-body模型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            疫情还没有解除。开学不能返校，所以只能在家里上课学习。实验室的正式任务也已经开始了。寒假布置的任务是学习并行计算的相关知识，和学习Linux系统下的编程（vim），以及多线程OpenMP语言。 
- 进入正题之前总是想要碎碎念一下。毕竟我的博
+                            概述N-Body问题又称为N体问题或多体问题，N表示任意正整数，研究N个质点相互之间作用的运动规律。在物理学和天文学中，N体模拟是通常在物理力（例如重力）的影响下对粒子动力学系统的模拟（请参见n体问题）。N体模拟是天体物理学中广泛使用的工具
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-04
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-23
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/并行计算/" class="post-category" target="_blank">
-                                    并行计算
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            tannl
                             
                         </span>
                     </div>
@@ -863,8 +749,8 @@ MPI
                         <span class="chip bg-color">并行计算</span>
                     </a>
                     
-                    <a href="/tags/OpenMP/" target="_blank">
-                        <span class="chip bg-color">OpenMP</span>
+                    <a href="/tags/算法/" target="_blank">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>

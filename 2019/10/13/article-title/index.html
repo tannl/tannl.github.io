@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>My first article | Tannl&#39;s Blog</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/jpeg" href="/avatar.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
@@ -29,7 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -40,7 +40,7 @@
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/medias/avatar.jpg" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">Tannl's Blog</span>
                 </a>
@@ -127,7 +127,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/medias/avatar.jpg" class="logo-img circle responsive-img">
         
         <div class="logo-name">Tannl's Blog</div>
         <div class="logo-desc">
@@ -210,7 +210,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/tannl" class="waves-effect waves-light" target="_blank">
                 <i class="fa fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -267,7 +267,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/tannl" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -448,11 +448,10 @@
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="关于重装系统后如何重新搭建"><a href="#关于重装系统后如何重新搭建" class="headerlink" title="关于重装系统后如何重新搭建"></a>关于重装系统后如何重新搭建</h3><p>基于保留原blog文件，或者github仓库中保留源文件，下载回来即可。</p>
 <h4 id="重新安装git和node-js"><a href="#重新安装git和node-js" class="headerlink" title="重新安装git和node.js"></a>重新安装git和node.js</h4><p>步骤和之前一样。</p>
 <h4 id="git-bash-here"><a href="#git-bash-here" class="headerlink" title="git bash here"></a>git bash here</h4><p>在blog文件下<code>git bash here</code>，输入<code>npm i hexo-cli -g</code>安装hexo，<br>不需要再输入指令<code>hexo init</code>进行初始化。<br>然后重新连接GitHub和hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"yourname"</span></span><br><span class="line">$ git config --global user.email <span class="string">"your@XX.com"</span></span><br></pre></td></tr></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"yourname"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your@XX.com"</span></code></pre>
 <p>接下来是生成密匙</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"792321264@qq.com"</span></span><br></pre></td></tr></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ ssh-keygen -t rsa -C <span class="token string">"792321264@qq.com"</span></code></pre>
 <p>到GitHub设置下加入新的密匙</p>
 
             </div>
@@ -896,15 +895,6 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/tannl" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fa fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:619301791@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fa fa-envelope-open"></i>
-    </a>
 
 
 
@@ -912,15 +902,8 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=619301791" class="tooltipped" data-tooltip="QQ联系我: 619301791" data-position="top" data-delay="50">
-        <i class="fa fa-qq"></i>
-    </a>
 
 
-
-    <a href="tannl" data-tooltip="关注我的微博: tannl" data-position="top" data-delay="50">
-        <i class="fa fa-weibo"></i>
-    </a>
 
 
 
