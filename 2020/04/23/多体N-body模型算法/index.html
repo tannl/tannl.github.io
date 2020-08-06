@@ -633,6 +633,28 @@
     </div>
 
     
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'comments',
+        owner: 'tannl',
+        admin: null,
+        id: '2020-04-23T11-50-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
 
     
 
@@ -663,9 +685,9 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。
+                            数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。 实验资源
 开始之前测试环境就遇到了报错：
-错误: fatal error: bits/libc-head
+错误: fatal error: bits/libc
                         
                     </div>
                     <div class="publish-info">

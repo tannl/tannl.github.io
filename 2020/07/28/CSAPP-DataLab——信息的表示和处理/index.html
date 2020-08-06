@@ -5,9 +5,9 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="CSAPP DataLab——信息的表示和处理, Tannl&#39;s Blog">
-    <meta name="description" content="数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。
+    <meta name="description" content="数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。 实验资源
 开始之前测试环境就遇到了报错：
-错误: fatal error: bits/libc-head">
+错误: fatal error: bits/libc">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -444,7 +444,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="数据实验室"><a href="#数据实验室" class="headerlink" title="数据实验室"></a>数据实验室</h3><p>《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。</p>
+                <h3 id="数据实验室"><a href="#数据实验室" class="headerlink" title="数据实验室"></a>数据实验室</h3><p>《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。 <a href="http://csapp.cs.cmu.edu/2e/labs.html" target="_blank" rel="noopener">实验资源</a></p>
 <p>开始之前测试环境就遇到了报错：</p>
 <p><strong>错误: fatal error: bits/libc-header-start.h: No such file or directory #include</strong></p>
 <p>环境： Ubuntu    <strong>（实验全部需要在32位环境下编译）</strong></p>
@@ -452,12 +452,49 @@
 <p>确认主机为64位架构的内核，应该输出为adm64，执行：</p>
 <pre><code>dpkg --print-architecture</code></pre><p> 确认打开了多架构支持功能，应该输出为i386，执行：</p>
 <pre><code>dpkg --print-foreign-architectures</code></pre><p>安装gcc multilab，执行：</p>
-<pre><code>sudo apt-get install gcc-multilib g++-multilib  </code></pre><h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>要求：</p>
-<p>/* bitAnd - x&amp;y using only ~ and | </p>
-<p>Example: bitAnd(6, 5) = 4</p>
-<p>Legal ops: ~ |</p>
-<p>Max ops: 8</p>
-<p>Rating: 1   */</p>
+<pre><code>sudo apt-get install gcc-multilib g++-multilib  </code></pre><h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>题目描述：最简单的一道题作为开始，，只能用或和否两种运算操作实现位的与运算。</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* bitAnd - x&amp;y using only ~ and | 
+
+Example: bitAnd(6, 5) = 4
+
+Legal ops: ~ |
+
+Max ops: 8
+
+Rating: 1   */</span>
+<span class="token keyword">int</span> <span class="token function">bitAnd</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token operator">~</span><span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token operator">|</span><span class="token operator">~</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>验证答案使用运算操作符是否符合要求：</p>
+<pre><code>./dlc -e bits.c</code></pre><p>验证答案是否正确：</p>
+<pre><code>make btest
+./btest -f bitAnd</code></pre><h4 id="getByte"><a href="#getByte" class="headerlink" title="getByte"></a>getByte</h4><p>题目描述：32位16进制表示，获取指定的有效位数。</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 
+ * getByte - Extract byte n from word x
+ *   Bytes numbered from 0 (LSB) to 3 (MSB)
+ *   Examples: getByte(0x12345678,1) = 0x56
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; >>
+ *   Max ops: 6
+ *   Rating: 2
+ */</span>
+<span class="token keyword">int</span> <span class="token function">getByte</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> x<span class="token operator">>></span><span class="token punctuation">(</span>n<span class="token operator">&lt;&lt;</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">&amp;</span><span class="token number">0xff</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MSB：最高有效位（最左侧）   LSB：最低有效位</p>
+<p><strong>掩码运算</strong>：x&amp;0xff生成一个由x的最低有效字节组成的值，其他字节被置为0。</p>
+<h4 id="logicalShift"><a href="#logicalShift" class="headerlink" title="logicalShift"></a>logicalShift</h4><p>题目描述：实现逻辑右移</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 
+ * logicalShift - shift x to the right by n, using a logical shift
+ *   Can assume that 0 &lt;= n &lt;= 31
+ *   Examples: logicalShift(0x87654321,4) = 0x08765432
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; >>
+ *   Max ops: 20
+ *   Rating: 3 
+ */</span>
+<span class="token keyword">int</span> <span class="token function">logicalShift</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>x<span class="token operator">>></span>n<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>对于有符号的int类型x，c语言默认执行&gt;&gt;为<strong>算数右移</strong>，所以这里有两种解决方式。一是将x直接强制转换为无符号类型，c语言将执行逻辑右移操作。还有一种方式是构造一个屏蔽码来屏蔽右移后的非扩展位，实现这种方式有点麻烦就懒的写了orz</p>
 <p>tbc. 有空了再写</p>
 
             </div>
@@ -645,6 +682,28 @@
     </div>
 
     
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'comments',
+        owner: 'tannl',
+        admin: null,
+        id: '2020-07-28T16-09-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
 
     
 
@@ -676,9 +735,9 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。
+                            数据实验室《深入理解计算机系统》书籍的配套作业。光看书实在是枯燥到有点看不下去，打算做一下MIT这门课程的实验，反正资源是公开的感觉也比较有趣。 实验资源
 开始之前测试环境就遇到了报错：
-错误: fatal error: bits/libc-head
+错误: fatal error: bits/libc
                         
                     </div>
                     <div class="publish-info">
