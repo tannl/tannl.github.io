@@ -492,10 +492,71 @@ Rating: 1   */</span>
  *   Rating: 3 
  */</span>
 <span class="token keyword">int</span> <span class="token function">logicalShift</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>x<span class="token operator">>></span>n<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> mask <span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">31</span><span class="token punctuation">)</span> <span class="token operator">>></span> n<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//nx0...111111</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> n<span class="token punctuation">)</span> <span class="token operator">&amp;</span> mask<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>对于有符号的int类型x，c语言默认执行&gt;&gt;为<strong>算数右移</strong>，所以这里有两种解决方式。一是将x直接强制转换为无符号类型，c语言将执行逻辑右移操作。还有一种方式是构造一个屏蔽码来屏蔽右移后的非扩展位，实现这种方式有点麻烦就懒的写了orz</p>
-<p>tbc. 有空了再写</p>
+<p>对于有符号的int类型x，c语言默认执行&gt;&gt;为<strong>算数右移</strong>，所以这里构造一个屏蔽码来屏蔽右移后的非扩展位。</p>
+<h4 id="bitCount"><a href="#bitCount" class="headerlink" title="bitCount"></a>bitCount</h4><p>题目描述：计算出32位二进制数中高位1的个数</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/*
+ * bitCount - returns count of number of 1's in word
+ *   Examples: bitCount(5) = 2, bitCount(7) = 3
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; >>
+ *   Max ops: 40
+ *   Rating: 4
+ */</span>
+<span class="token keyword">int</span> <span class="token function">bitCount</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">int</span> tmp <span class="token operator">=</span> <span class="token number">0x11</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">0x11</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> mask <span class="token operator">=</span> tmp <span class="token operator">|</span> <span class="token punctuation">(</span>tmp <span class="token operator">&lt;&lt;</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// form a mask 0x11111111</span>
+  <span class="token comment" spellcheck="true">// divide into 8 groups(8 bytes)</span>
+  <span class="token keyword">int</span> ans <span class="token operator">=</span> mask <span class="token operator">&amp;</span> x<span class="token punctuation">;</span>
+  ans <span class="token operator">+</span><span class="token operator">=</span> mask <span class="token operator">&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ans <span class="token operator">+</span><span class="token operator">=</span> mask <span class="token operator">&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ans <span class="token operator">+</span><span class="token operator">=</span> mask <span class="token operator">&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// sum the values of every bytes in ans</span>
+  ans <span class="token operator">+</span><span class="token operator">=</span> ans <span class="token operator">>></span> <span class="token number">16</span><span class="token punctuation">;</span>
+  mask <span class="token operator">=</span> <span class="token number">0xf</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">0xf</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// form a mask 0x0f0f</span>
+  <span class="token comment" spellcheck="true">// divide into 2 groups</span>
+  ans <span class="token operator">=</span> <span class="token punctuation">(</span>ans <span class="token operator">&amp;</span> mask<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>ans <span class="token operator">>></span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>ans <span class="token operator">+</span> <span class="token punctuation">(</span>ans <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x3f</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这题好难，刚看到题目一点思路的都没有，不得已只能靠Google了。</p>
+<p>解决方法大概就是通过构造常数，这里分别是0x11111111，将32位分成8个四位计算出每四位中高位的个数得到ans。再由ans&gt;&gt;16，将前16位和后16位表示的有效计算结果相加，此时后16位以4位为一组表示的数的总和就是高位的总个数。继续构造常数0x0f0f，将后16位中15~12位与11~8位相加，7~4位与3~0位相加，此时后16位的11~8位与3~0位所表示的数的总和为高位总个数，其余位置为0。最后将11~8位与3~0位相加，并用掩码0x3f（由于最高位最多是32位，此时保留最低有效位6位）将其余位置置0。</p>
+<h4 id="bang"><a href="#bang" class="headerlink" title="bang"></a>bang</h4><p>题目描述：不使用！符号，实现！运算…</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 
+ * bang - Compute !x without using !
+ *   Examples: bang(3) = 0, bang(0) = 1
+ *   Legal ops: ~ &amp; ^ | + &lt;&lt; >>
+ *   Max ops: 12
+ *   Rating: 4 
+ */</span>
+<span class="token keyword">int</span> <span class="token function">bang</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token comment" spellcheck="true">/*
+  x=(x>>16)|x;
+  x=(x>>8)|x;
+  x=(x>>4)|x;
+  x=(x>>2)|x;
+  x=(x>>1)|x;
+  return ~x&amp;0x1;
+ */</span>
+  <span class="token keyword">int</span> temp <span class="token operator">=</span> <span class="token operator">~</span>x<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+  temp <span class="token operator">=</span> temp<span class="token operator">|</span>x<span class="token punctuation">;</span>
+  temp <span class="token operator">=</span> temp<span class="token operator">>></span><span class="token number">31</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token operator">~</span>temp<span class="token operator">&amp;</span><span class="token number">0x1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>第一种方式：通过移位和或运算，将高位一步一步折叠至最低有效位，最后取反并使用掩码只保留最低有效位。（掩码也太强了，几乎每题都有用到）</p>
+<p>第二种方式：通过最高位来判断；因为只需要判断x是否为0，当x为0时，取反加一则会省略进位得到0x0（最高位为0），其余情况若x为负数则最高位为0，否则为1；通过temp|x来判断x是否为负数，若x为负数最高位重新置为1；此时即可通过最高位来判断x是否为0。</p>
+<h4 id="tmin"><a href="#tmin" class="headerlink" title="tmin"></a>tmin</h4><p>题目描述：求最小补码</p>
+<pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* 
+ * tmin - return minimum two's complement integer 
+ *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; >>
+ *   Max ops: 4
+ *   Rating: 1
+ */</span>
+<span class="token keyword">int</span> <span class="token function">tmin</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token number">31</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>最开始还没太看懂这题什么意思…two’s complement的意思的二进制补码，我以为是2的补码…</p>
+<p>tbc. </p>
 
             </div>
             <hr/>
